@@ -7,7 +7,7 @@ const routeMapping = {
   '/': 'isDis',
   '/account': 'isMa',
   '/fy': 'isFy',
-  '/me': 'isMe',
+  '/event': 'isMe',
   '/sell': 'isSell',
 }
 
@@ -28,7 +28,10 @@ onMounted(() => {
       <img v-if="activeLink !== 'isDis'" src="../assets/dis.jpeg" alt="" />
     </RouterLink>
     <img src="../assets/fy.jpeg" alt="" />
-    <img src="../assets/me.jpeg" alt="" />
+    <RouterLink to="/event">
+      <img v-if="activeLink !== 'isMe'" src="../assets/me.jpeg" alt="" />
+      <img v-if="activeLink == 'isMe'" src="../assets/meActive.jpeg" alt="" />
+    </RouterLink>
     <img src="../assets/sell.jpeg" alt="" />
     <RouterLink to="/account">
       <img v-if="activeLink !== 'isMa'" src="../assets/ma.jpeg" alt="" />
