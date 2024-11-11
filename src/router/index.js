@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import IndexView from '../views/IndexView.vue'
 import AccountView from '../views/AccountView.vue'
 import EventView from '../views/EventView.vue'
+import EventSlideView from '../views/EventSlideView.vue'
+import EditPage from '../views/EditPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,17 @@ const router = createRouter({
       path: '/event',
       name: 'event',
       component: EventView,
+    },
+    {
+      path: '/event/details',
+      name: 'event-details',
+      component: EventSlideView,
+      props: route => ({ event: route.query.event }),
+    },
+    {
+      path: '/edit-page',
+      name: 'edit page',
+      component: EditPage,
     },
     {
       path: '/about',

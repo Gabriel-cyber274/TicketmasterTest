@@ -1,6 +1,27 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import BottomNav from '../components/BottomNav.vue'
+import { ref, onMounted } from 'vue'
+import { collection, getDocs } from 'firebase/firestore'
+import { firestore } from '../firebaseConfig'
+
+const isUpcoming = ref(true)
+const event = ref([])
+
+const handleChange = value => {
+  isUpcoming.value = value
+}
+
+onMounted(async () => {
+  try {
+    const itemsCollection = collection(firestore, 'event')
+    const snapshot = await getDocs(itemsCollection)
+    event.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    console.log('Fetched items:', event.value)
+  } catch (err) {
+    console.error('Error fetching items:', err)
+  }
+})
 </script>
 
 <template>
@@ -8,25 +29,47 @@ import BottomNav from '../components/BottomNav.vue'
     <div class="main_sec">
       <img class="fixed-top" src="../assets/img11.jpeg" alt="" />
       <div class="first_sec">
-        <img src="../assets/img12.jpeg" alt="" />
-      </div>
-      <div class="ticket-first p-2">
-        <div class="top-level">
-          <h3 class="py-1">NEW DATE</h3>
-        </div>
-        <div class="image-and-date">
-          <img class="ti" src="../assets/adele-pic.jfif" alt="" />
-          <div class="ticket-details">
-            <h2>Weekends with Adele</h2>
-            <p class="mb-1">
-              Sat, Nov 9, 8pm • The Colosseum at Caesars Palace
-            </p>
-            <h6 class="d-flex align-items-center">
-              <i class="fas fa-ticket-alt ticketIcon me-1"></i> 4 tickets
-            </h6>
+        <!-- <img src="../assets/img12.jpeg" alt="" /> -->
+        <div class="blue-nav d-flex justify-content-between">
+          <div
+            :class="['first', isUpcoming && 'active']"
+            @click="handleChange(true)"
+          >
+            <h3>UPCOMING (1)</h3>
+          </div>
+          <div
+            :class="['second', !isUpcoming && 'active']"
+            @click="handleChange(false)"
+          >
+            <h3>PAST (0)</h3>
           </div>
         </div>
       </div>
+      <RouterLink
+        :to="{
+          name: 'event-details',
+          query: { event: JSON.stringify(event) },
+        }"
+      >
+        <div class="ticket-first p-2">
+          <div class="top-level">
+            <h3 class="py-1">NEW DATE</h3>
+          </div>
+          <div class="image-and-date">
+            <img class="ti" src="../assets/adele-pic.jfif" alt="" />
+            <div class="ticket-details">
+              <h2>{{ event[0]?.event_name }}</h2>
+              <p class="mb-1">
+                {{ event[0]?.date_place }}
+              </p>
+              <h6 class="d-flex align-items-center">
+                <i class="fas fa-ticket-alt ticketIcon me-1"></i>
+                {{ event.length }} tickets
+              </h6>
+            </div>
+          </div>
+        </div>
+      </RouterLink>
     </div>
 
     <BottomNav />
@@ -36,6 +79,25 @@ import BottomNav from '../components/BottomNav.vue'
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.blue-nav {
+  background: #004de7;
+  color: white;
+  margin-top: 12%;
+}
+.blue-nav div {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+}
+.blue-nav div h3 {
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+.blue-nav .active {
+  border-bottom: 5px solid white;
+}
 .first_sec {
   background: white;
 }

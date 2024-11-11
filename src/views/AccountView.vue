@@ -1,16 +1,38 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { reactive, onMounted } from 'vue'
+import { collection, getDocs } from 'firebase/firestore'
+import { firestore } from '../firebaseConfig'
 import BottomNav from '../components/BottomNav.vue'
-</script>
 
+// Define a reactive object to hold the items
+const state = reactive({
+  items: [],
+  loading: true,
+  error: null,
+})
+
+onMounted(async () => {
+  try {
+    const itemsCollection = collection(firestore, 'user')
+    const snapshot = await getDocs(itemsCollection)
+    state.items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    // console.log('Fetched items:', state.items)
+  } catch (err) {
+    console.error('Error fetching items:', err)
+    state.error = 'Failed to load items.'
+  } finally {
+    state.loading = false
+  }
+})
+</script>
 <template>
   <div class="main_container">
     <div class="main_sec">
       <img class="fixed-top" src="../assets/acc1.jpeg" alt="" />
       <div class="first_sec">
         <div class="black_name px-4 pb-3 pt-5">
-          <h1 class="mb-2">Ijaka</h1>
-          <h5>ijakasbm@gmail.com</h5>
+          <h1 class="mb-2">{{ state.items[0]?.name }}</h1>
+          <h5>{{ state.items[0]?.email }}</h5>
         </div>
       </div>
       <img src="../assets/acc2.jpeg" alt="" />

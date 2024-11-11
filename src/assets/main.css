@@ -39,3 +39,7 @@ body {
 .footer_cont img {
   transform: scale(0.8);
 }
+
+.swiper-pagination-bullet-active {
+  background: #6c6c6c !important;
+}
