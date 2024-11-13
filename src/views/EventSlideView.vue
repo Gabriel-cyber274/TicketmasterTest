@@ -343,7 +343,8 @@ onMounted(() => {
 .slide-event .third h1 {
   text-align: center;
   font-size: 20px;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
+  margin-top: 4px;
 }
 .slide-event .third h3 {
   text-align: center;
@@ -381,6 +382,7 @@ onMounted(() => {
 .slide-event .first .row-seat h4 {
   color: #f5f5f5e6;
   font-size: 14px;
+  margin-bottom: 2px;
 }
 .slide-event .first .row-seat h2 {
   color: white;
