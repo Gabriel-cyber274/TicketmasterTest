@@ -1,6 +1,13 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
-import { collection, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
 import BottomNav from '../components/BottomNav.vue'
 import axios from 'axios' // Import axios for HTTP requests
@@ -216,6 +223,7 @@ const postTicket = async event => {
 
 const deleteEvent = async eventId => {
   try {
+    console.log(eventId)
     const eventDocRef = doc(firestore, 'event', eventId) // Get reference to the event's document
     await deleteDoc(eventDocRef) // Delete the event from Firestore
 
