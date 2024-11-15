@@ -344,7 +344,7 @@ onMounted(() => {
 }
 .slide-event .third h1 {
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 4px;
   margin-top: 4px;
   font-weight: 500;
@@ -372,12 +372,13 @@ onMounted(() => {
 }
 .slide-event .second div h2 {
   font-size: 19px;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 .slide-event .second div p {
   font-size: 13px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
+  margin-bottom: 6px;
 }
 .slide-event .first .row-seat {
   font-family: 'Poppins', sans-serif;
