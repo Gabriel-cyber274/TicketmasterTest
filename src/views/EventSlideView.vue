@@ -48,7 +48,8 @@ onMounted(() => {
   <div class="main_container">
     <div class="main_sec">
       <div class="fixed-top">
-        <img src="../assets/eventDH.jpeg" alt="" />
+        <!-- <img src="../assets/eventDH.jpeg" alt="" /> -->
+        <img src="../assets/eventDH2.jpg" alt="" />
         <RouterLink to="/event">
           <img class="cancel" src="../assets/cancel.jpeg" alt="" />
         </RouterLink>
@@ -101,7 +102,8 @@ onMounted(() => {
                 </div>
                 <div class="third px-4 py-4">
                   <h1>SECTION {{ ticket.section }}</h1>
-                  <img class="py-4" src="../assets/viewT.jpeg" alt="" />
+                  <!-- <img class="py-4" src="../assets/viewT.jpeg" alt="" /> -->
+                  <img class="py-4" src="../assets/viewT2.jpg" alt="" />
                   <h3>Ticket Details</h3>
                 </div>
                 <div class="fourth"></div>
@@ -338,13 +340,14 @@ onMounted(() => {
 
 .slide-event .third {
   background: white;
-  font-family: 'Poppins', sans-serif;
+  font-family: Arial;
 }
 .slide-event .third h1 {
   text-align: center;
   font-size: 20px;
   margin-bottom: 4px;
   margin-top: 4px;
+  font-weight: 500;
 }
 .slide-event .third h3 {
   text-align: center;
@@ -374,10 +377,13 @@ onMounted(() => {
 .slide-event .second div p {
   font-size: 13px;
   text-align: center;
+  font-family: 'Poppins', sans-serif;
 }
 .slide-event .first .row-seat {
   font-family: 'Poppins', sans-serif;
   text-align: center;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
 }
 .slide-event .first .row-seat h4 {
   color: #f5f5f5e6;
