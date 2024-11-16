@@ -180,6 +180,18 @@ onMounted(() => {
             </div>
           </div>
         </BottomSheet>
+
+        <!-- <div class="map px-3" style="width: 100%">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.5851956981!2d-0.26640495815802395!3d51.52852620123247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sng!4v1731747434858!5m2!1sen!2sng"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div> -->
       </div>
     </div>
   </div>
@@ -188,6 +200,10 @@ onMounted(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.map iframe {
+  width: 100%;
+  height: 400px;
+}
 .bottom-modalstuff .fifth {
   background: #9a9a9a66;
 }
@@ -375,7 +391,7 @@ onMounted(() => {
   margin-bottom: 0px;
 }
 .slide-event .second div p {
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 6px;
