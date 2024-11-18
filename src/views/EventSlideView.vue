@@ -181,6 +181,10 @@ onMounted(() => {
           </div>
         </BottomSheet>
 
+        <div class="map-img px-3">
+          <img class="pb-4" src="../assets/mapstuff.jpg" alt="" />
+        </div>
+
         <!-- <div class="map px-3" style="width: 100%">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.5851956981!2d-0.26640495815802395!3d51.52852620123247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sng!4v1731747434858!5m2!1sen!2sng"
@@ -203,6 +207,9 @@ onMounted(() => {
 .map iframe {
   width: 100%;
   height: 400px;
+}
+.map-img {
+  width: 100%;
 }
 .bottom-modalstuff .fifth {
   background: #9a9a9a66;
@@ -410,6 +417,8 @@ onMounted(() => {
 .slide-event .first .row-seat h2 {
   color: white;
   font-size: 20px;
+  font-family: Helvetica;
+  font-weight: 600;
 }
 .slide-event .first .header {
   text-align: center;
