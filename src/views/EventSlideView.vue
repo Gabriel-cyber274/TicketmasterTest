@@ -7,6 +7,9 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import BottomSheet from '../components/BottomSheet.vue'
 import { useRoute } from 'vue-router'
+import { collection, getDocs } from 'firebase/firestore'
+import { firestore } from '../firebaseConfig'
+
 const route = useRoute()
 
 // import required modules
@@ -21,6 +24,8 @@ console.log(JSON.parse(route.query.event))
 const showModal = ref(false)
 const isChecked = ref(false)
 
+const mapName = ref([])
+
 const openBottomSheet = () => {
   showModal.value = true
 }
@@ -29,12 +34,17 @@ const closeBottomSheet = () => {
   showModal.value = false
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (route.query.event) {
     try {
       tickets.value = JSON.parse(route.query.event)
       checkedTickets.value = new Array(tickets.value.length).fill(false) // Update checkedTickets after tickets are loaded
       showStuff.value = true
+
+      const itemsCollection = collection(firestore, 'map')
+      const snapshot = await getDocs(itemsCollection)
+      mapName.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      console.log('Fetched items:', mapName.value)
     } catch (e) {
       console.error('Error parsing event data:', e)
     }
@@ -92,7 +102,8 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="second position-relative">
-                  <img class="ti" src="../assets/adele-pic.jfif" alt="" />
+                  <!-- <img class="ti" src="../assets/adele-pic.jfif" alt="" /> -->
+                  <img class="ti" :src="ticket.url" alt="" />
                   <div class="position-absolute">
                     <h2>{{ ticket.event_name }}</h2>
                     <p class="px-1">
@@ -181,8 +192,11 @@ onMounted(() => {
           </div>
         </BottomSheet>
 
-        <div class="map-img px-3">
-          <img class="pb-4" src="../assets/mapstuff.jpg" alt="" />
+        <!-- <img class="pb-4" src="../assets/mapstuff.jpg" alt="" /> -->
+        <div class="map-img px-3 position-relative">
+          <img class="pb-4" src="../assets/mapstuff2.jpeg" alt="" />
+
+          <h3>{{ mapName[0]?.location }}</h3>
         </div>
 
         <!-- <div class="map px-3" style="width: 100%">
@@ -204,6 +218,15 @@ onMounted(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.map-img h3 {
+  position: absolute;
+  color: #80817e;
+  top: 15%;
+  left: 8%;
+  font-size: 26px;
+  font-weight: 500;
+}
+
 .map iframe {
   width: 100%;
   height: 400px;
@@ -213,6 +236,7 @@ onMounted(() => {
 }
 .bottom-modalstuff .fifth {
   background: #9a9a9a66;
+  padding-bottom: 40px !important;
 }
 .bottom-modalstuff .fifth h3 {
   font-size: 16px;

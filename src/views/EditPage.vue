@@ -26,6 +26,7 @@ const state = reactive({
 const formData = reactive({
   email: '',
   name: '',
+  map: '',
   imageUrl: '', // To store the image URL
 })
 
@@ -54,6 +55,11 @@ onMounted(async () => {
       ...doc.data(),
     }))
     state.events = fetchedItems3
+
+    const itemsCollection4 = collection(firestore, 'map')
+    const snapshot4 = await getDocs(itemsCollection4)
+    let data = snapshot4.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    formData.map = data[0].location || ''
 
     // Update form data once items are fetched
     if (fetchedItems.length > 0) {
@@ -242,6 +248,40 @@ const deleteEvent = async eventId => {
     }, 3000)
   }
 }
+
+const updateMap = async event => {
+  event.preventDefault()
+
+  try {
+    const itemsCollection = collection(firestore, 'map')
+    const snapshot = await getDocs(itemsCollection)
+    let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+    const imgUrlDocRef = doc(firestore, 'map', data[0].id)
+    await updateDoc(imgUrlDocRef, {
+      location: event.target[0].value,
+    })
+
+    state.successMessage = 'Map updated successfully!'
+
+    console.log(event.target[0].value)
+    event.target.reset()
+
+    // Auto hide the success message after 3 seconds
+    setTimeout(() => {
+      state.successMessage = null
+    }, 3000)
+  } catch (error) {
+    state.error = 'Failed to updated map name.'
+
+    console.error('Error adding ticket:', error)
+
+    // Auto hide the error message after 3 seconds
+    setTimeout(() => {
+      state.error = null
+    }, 3000)
+  }
+}
 </script>
 
 <template>
@@ -322,6 +362,25 @@ const deleteEvent = async eventId => {
       <div v-if="state.error" class="error-container">
         <p>{{ state.error }}</p>
       </div>
+    </div>
+
+    <div class="third my-5">
+      <h1>Map Details</h1>
+      <form @submit="updateMap">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Location name</label
+          >
+          <input
+            type="text"
+            v-model="formData.map"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Footprint Center"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">update</button>
+      </form>
     </div>
 
     <div class="third my-5">

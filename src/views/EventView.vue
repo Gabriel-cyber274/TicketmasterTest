@@ -51,12 +51,13 @@ onMounted(async () => {
           query: { event: JSON.stringify(event) },
         }"
       >
-        <div class="ticket-first p-2">
+        <div v-if="event.length > 0" class="ticket-first p-2">
           <div class="top-level">
             <h3 class="py-1">NEW DATE</h3>
           </div>
           <div class="image-and-date">
-            <img class="ti" src="../assets/adele-pic.jfif" alt="" />
+            <!-- <img class="ti" src="../assets/adele-pic.jfif" alt="" /> -->
+            <img class="ti" :src="event[0]?.url" alt="" />
             <div class="ticket-details">
               <h2>{{ event[0]?.event_name }}</h2>
               <p class="mb-1">
