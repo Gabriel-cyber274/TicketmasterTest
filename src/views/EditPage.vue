@@ -180,9 +180,9 @@ const postTicket = async event => {
     '[placeholder="Weekends with Adele"]',
   ).value
   const row = event.target.querySelector('[placeholder="G"]').value
-  const seat = event.target.querySelector('[placeholder="104"]').value
-  const sec = event.target.querySelector('[placeholder="104"]').value
-  const section = event.target.querySelector('[placeholder="104"]').value
+  const seat = event.target.querySelector('[placeholder="104 seat"]').value
+  const sec = event.target.querySelector('[placeholder="104 section"]').value
+  const section = event.target.querySelector('[placeholder="104 section"]').value
   const datePlace = event.target.querySelector(
     '[placeholder="Sat, Nov 9, 8pm • The Colosseum at Caesars Palace "]',
   ).value
@@ -412,7 +412,7 @@ const updateMap = async event => {
             type="text"
             class="form-control"
             id="exampleFormControlInput1"
-            placeholder="104"
+            placeholder="104 seat"
           />
         </div>
         <div class="mb-3">
@@ -423,7 +423,7 @@ const updateMap = async event => {
             type="text"
             class="form-control"
             id="exampleFormControlInput1"
-            placeholder="104"
+            placeholder="104 section"
           />
         </div>
         <div class="mb-3">
