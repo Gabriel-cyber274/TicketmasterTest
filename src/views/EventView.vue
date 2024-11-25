@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
 
 const isUpcoming = ref(true)
+const loading = ref(false)
 const event = ref([])
 
 const handleChange = value => {
@@ -14,11 +15,15 @@ const handleChange = value => {
 
 onMounted(async () => {
   try {
+    loading.value = true
     const itemsCollection = collection(firestore, 'event')
     const snapshot = await getDocs(itemsCollection)
     event.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
     console.log('Fetched items:', event.value)
+    loading.value = false
   } catch (err) {
+    loading.value = false
+
     console.error('Error fetching items:', err)
   }
 })
@@ -45,16 +50,19 @@ onMounted(async () => {
           </div>
         </div>
       </div>
+      <div v-if="loading" class="loader-stuff py-2">
+        <img src="../assets/loader.gif" width="20" height="20" alt="" />
+      </div>
       <RouterLink
         :to="{
           name: 'event-details',
           query: { event: JSON.stringify(event) },
         }"
       >
-        <div v-if="event.length > 0" class="ticket-first p-2">
-          <div class="top-level">
+        <div v-if="event.length > 0 && !loading" class="ticket-first p-2">
+          <!-- <div class="top-level">
             <h3 class="py-1">NEW DATE</h3>
-          </div>
+          </div> -->
           <div class="image-and-date">
             <!-- <img class="ti" src="../assets/adele-pic.jfif" alt="" /> -->
             <img class="ti" :src="event[0]?.url" alt="" />
@@ -80,6 +88,14 @@ onMounted(async () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.loader-stuff img {
+  width: 40px;
+  height: 40px;
+}
+.loader-stuff {
+  display: flex;
+  justify-content: center;
+}
 .blue-nav {
   background: #004de7;
   color: white;
