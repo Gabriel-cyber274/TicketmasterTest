@@ -146,6 +146,7 @@ onMounted(async () => {
               </div>
             </SwiperSlide>
           </Swiper>
+          
         </div>
         <div class="buttons-ts d-flex align-items-center">
           <button @click="openBottomSheet">Transfer</button>
