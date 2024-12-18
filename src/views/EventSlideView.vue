@@ -6,6 +6,8 @@ import 'swiper/swiper-bundle.css'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import BottomSheet from '../components/BottomSheet.vue'
+import BottomSheet2 from '../components/BottomSheet2.vue'
+import Transfer from '../components/TransferSheet.vue'
 import { useRoute } from 'vue-router'
 import { collection, getDocs } from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
@@ -22,16 +24,39 @@ const checkedTickets = ref([])
 console.log(JSON.parse(route.query.event))
 
 const showModal = ref(false)
+const showModal2 = ref(false)
+const showModal3 = ref(false)
 const isChecked = ref(false)
 
 const mapName = ref([])
 
 const openBottomSheet = () => {
   showModal.value = true
+  console.log(checkedTickets, 'hello')
 }
 
 const closeBottomSheet = () => {
   showModal.value = false
+}
+const closeBottomSheet2 = () => {
+  showModal2.value = false
+}
+const closeBottomSheet3 = () => {
+  showModal3.value = false
+}
+
+const transferToFunc = () => {
+  showModal2.value = true
+  showModal.value = false
+}
+
+const transferFunc = () => {
+  showModal2.value = false
+  showModal3.value = true
+  showModal.value = false
+}
+const selectedSeats = () => {
+  return tickets.value.filter((ticket, index) => checkedTickets.value[index])
 }
 
 onMounted(async () => {
@@ -112,7 +137,7 @@ onMounted(async () => {
                   </div>
                 </div>
                 <div class="third px-4 py-4">
-                  <h1>SECTION {{ ticket.section }}</h1>
+                  <h1>{{ ticket.section_bottom }}</h1>
                   <!-- <img class="py-4" src="../assets/viewT.jpeg" alt="" /> -->
                   <img class="py-4" src="../assets/viewT2.jpg" alt="" />
                   <h3>Ticket Details</h3>
@@ -185,12 +210,102 @@ onMounted(async () => {
                 Selected
               </h3>
 
-              <h2 class="d-flex align-items-center">
+              <h2 @click="transferToFunc" class="d-flex align-items-center">
                 TRANSFER TO <i class="fas fa-chevron-right ms-2"></i>
               </h2>
             </div>
           </div>
         </BottomSheet>
+
+        <BottomSheet2 :isVisible="showModal2" @close="closeBottomSheet2">
+          <div class="bottom-modalstuff">
+            <div class="first py-3">
+              <h2>TICKET TO</h2>
+            </div>
+            <div class="transfer_cont px-3 mb-2 pt-4">
+              <img class="mb-2" src="../assets/contc.jpg" alt="" />
+              <img
+                @click="transferFunc"
+                class="mb-3"
+                src="../assets/manual.jpg"
+                alt=""
+              />
+              <img
+                class="mb-3"
+                style="width: 100%"
+                src="../assets/emailtext.jpg"
+                alt=""
+              />
+            </div>
+          </div>
+        </BottomSheet2>
+
+        <Transfer :isVisible="showModal3" @close="closeBottomSheet3">
+          <div class="bottom-modalstuff" style="height: 100vh">
+            <div class="first py-3">
+              <h2>TICKETS</h2>
+            </div>
+            <div class="transfer_form p-3">
+              <div class="first_header">
+                <h4>
+                  {{ checkedTickets.filter(isChecked => isChecked).length }}
+                  Tickets Selected
+                </h4>
+                <h5 class="mt-2">
+                  Sec <span>{{ tickets[0].sec }}</span
+                  >, Row <span>{{ tickets[0].row }}</span
+                  >, Seats
+                  <span
+                    v-for="(seat, seatIndex) in tickets.filter(
+                      (ticket, index) => checkedTickets[index],
+                    )"
+                    :key="seat.id"
+                  >
+                    <span>{{ seat.seat }}</span>
+                    <span
+                      v-if="
+                        seatIndex !==
+                        tickets.filter((ticket, index) => checkedTickets[index])
+                          .length -
+                          1
+                      "
+                    >
+                      ,
+                    </span>
+                  </span>
+                </h5>
+              </div>
+              <div class="form mt-4">
+                <div class="mb-2">
+                  <label for="" class="mb-1">Email or Mobile Number</label>
+                  <input type="text" name="" id="" />
+                </div>
+                <div class="mb-2">
+                  <label for="" class="mb-1">First Name</label>
+                  <input type="text" name="" id="" />
+                </div>
+                <div class="mb-2">
+                  <label for="" class="mb-1">Last Name</label>
+                  <input type="text" name="" id="" />
+                </div>
+                <div class="mb-2">
+                  <label for="" class="mb-1">Note</label>
+                  <textarea name="" id="" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="fifth fifth2 d-flex align-items-center justify-content-between p-3 mt-3"
+            >
+              <h2 @click="closeBottomSheet3" class="d-flex align-items-center">
+                <i class="fas fa-chevron-left me-2"></i> Back
+              </h2>
+
+              <button class="px-4 py-2">Transfer</button>
+            </div>
+          </div>
+        </Transfer>
 
         <!-- <img class="pb-4" src="../assets/mapstuff.jpg" alt="" /> -->
         <div class="map-img px-3 position-relative">
@@ -217,6 +332,50 @@ onMounted(async () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.transfer_form .first_header h4 {
+  font-size: 17px;
+  margin-bottom: 0px;
+  font-family: Poppins;
+}
+.transfer_form .first_header h5 {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #918b8be6;
+  font-family: Poppins;
+}
+.transfer_form .first_header h5 span {
+  color: black;
+}
+
+.transfer_form .form label {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #918b8be6;
+  font-family: Poppins;
+  display: block;
+}
+.transfer_form .form input {
+  width: 100%;
+  height: 41px;
+  border: 1px solid #918b8be6;
+  outline: none;
+  font-size: 14px;
+  color: #646060;
+  padding: 10px;
+}
+.transfer_form .form textarea {
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+  border: 1px solid #918b8be6;
+  color: #646060;
+  height: 70px;
+  padding: 10px;
+  max-height: 70px;
+  outline: none;
+  min-height: 70px;
+}
 
 .map-img h3 {
   position: absolute;
@@ -287,7 +446,7 @@ onMounted(async () => {
   font-size: 15px;
 }
 .bottom-modalstuff .second .info {
-  background: #9a9a9a66;
+  background: white;
   border: 1px solid #9a9a9a;
   font-family: 'Poppins', sans-serif;
   border-radius: 5px;
@@ -301,6 +460,7 @@ onMounted(async () => {
 .bottom-modalstuff .first h2 {
   margin-bottom: 0;
   font-size: 18px;
+  font-weight: 600;
 }
 
 .swiper-pagination {
@@ -490,5 +650,19 @@ onMounted(async () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.bottom-modalstuff .fifth2 {
+  padding: 20px !important;
+}
+
+.bottom-modalstuff .fifth2 button {
+  background: #0157ea;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 1px;
+  border: none;
+  padding: 7px 32px !important;
 }
 </style>

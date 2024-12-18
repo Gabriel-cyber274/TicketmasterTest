@@ -182,9 +182,15 @@ const postTicket = async event => {
   const row = event.target.querySelector('[placeholder="G"]').value
   const seat = event.target.querySelector('[placeholder="104 seat"]').value
   const sec = event.target.querySelector('[placeholder="104 section"]').value
-  const section = event.target.querySelector('[placeholder="104 section"]').value
+  const section = event.target.querySelector(
+    '[placeholder="104 section"]',
+  ).value
   const datePlace = event.target.querySelector(
     '[placeholder="Sat, Nov 9, 8pm • The Colosseum at Caesars Palace "]',
+  ).value
+
+  const section_bottom = event.target.querySelector(
+    '[placeholder="SECTION 108"]',
   ).value
   const url = formData.imageUrl // Assuming the image URL is stored in formData.imageUrl
 
@@ -198,6 +204,7 @@ const postTicket = async event => {
       section: section,
       date_place: datePlace,
       url: url,
+      section_bottom: section_bottom,
     })
 
     state.successMessage = 'Ticket created successfully!' // Show success message
@@ -437,6 +444,18 @@ const updateMap = async event => {
             placeholder="Sat, Nov 9, 8pm • The Colosseum at Caesars Palace "
           />
         </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >section bottom</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="SECTION 108"
+          />
+        </div>
         <button type="submit" class="btn btn-primary">Create</button>
       </form>
     </div>
@@ -455,6 +474,7 @@ const updateMap = async event => {
               <strong>Row:</strong> {{ event.row }} | <strong>Seat:</strong>
               {{ event.seat }}
             </p>
+            <p><strong>section_bottom:</strong> {{ event.section_bottom }}</p>
             <p>
               <strong>Section:</strong> {{ event.section }} |
               <strong>Date/Place:</strong> {{ event.date_place }}
