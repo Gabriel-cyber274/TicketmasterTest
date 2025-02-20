@@ -349,7 +349,7 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 4%;
+  top: 37px;
   left: 0;
   width: 100%;
   z-index: 2000;
@@ -653,7 +653,7 @@ onMounted(async () => {
   position: absolute;
 }
 .main-stuff {
-  margin-top: 24%;
+  margin-top: 103px;
 }
 
 .custom-checkbox {
