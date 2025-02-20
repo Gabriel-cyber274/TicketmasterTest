@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import {
   collection,
   getDocs,
@@ -11,6 +11,11 @@ import {
 import { firestore } from '../firebaseConfig'
 import BottomNav from '../components/BottomNav.vue'
 import axios from 'axios' // Import axios for HTTP requests
+
+const showRow = ref(true)
+const rowText = ref('')
+const row = ref('')
+const seat = ref('')
 
 // Define a reactive object to hold the items
 const state = reactive({
@@ -179,8 +184,8 @@ const postTicket = async event => {
   const eventName = event.target.querySelector(
     '[placeholder="Weekends with Adele"]',
   ).value
-  const row = event.target.querySelector('[placeholder="G"]').value
-  const seat = event.target.querySelector('[placeholder="104 seat"]').value
+  // const row = event.target.querySelector('[placeholder="G"]').value
+  // const seat = event.target.querySelector('[placeholder="104 seat"]').value
   const sec = event.target.querySelector('[placeholder="104 section"]').value
   const section = event.target.querySelector(
     '[placeholder="104 section"]',
@@ -198,8 +203,10 @@ const postTicket = async event => {
     const ticketsCollection = collection(firestore, 'event')
     const docRef = await addDoc(ticketsCollection, {
       event_name: eventName,
-      row: row,
-      seat: seat,
+      row: row.value,
+      seat: seat.value,
+      no_row_text: rowText.value,
+      show_row: showRow.value,
       sec: sec,
       section: section,
       date_place: datePlace,
@@ -216,6 +223,7 @@ const postTicket = async event => {
       ...doc.data(),
     }))
     state.events = fetchedItems3
+    rowText.value = ''
     event.target.reset()
 
     // Auto hide the success message after 3 seconds
@@ -392,6 +400,19 @@ const updateMap = async event => {
 
     <div class="third my-5">
       <h1>Create Ticket</h1>
+      <div class="form-check form-switch mb-3">
+        <input
+          v-model="showRow"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckChecked"
+          checked
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked"
+          >show rows</label
+        >
+      </div>
       <form @submit="postTicket">
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
@@ -404,22 +425,36 @@ const updateMap = async event => {
             placeholder="Weekends with Adele"
           />
         </div>
-        <div class="mb-3">
+        <div class="mb-3" v-if="showRow">
           <label for="exampleFormControlInput1" class="form-label">Row</label>
           <input
+            v-model="row"
             type="text"
             class="form-control"
             id="exampleFormControlInput1"
             placeholder="G"
           />
         </div>
-        <div class="mb-3">
+        <div class="mb-3" v-if="showRow">
           <label for="exampleFormControlInput1" class="form-label">Seat</label>
           <input
+            v-model="seat"
             type="text"
             class="form-control"
             id="exampleFormControlInput1"
             placeholder="104 seat"
+          />
+        </div>
+        <div class="mb-3" v-if="!showRow">
+          <label for="exampleFormControlInput1" class="form-label"
+            >default row text</label
+          >
+          <input
+            v-model="rowText"
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="General Admission"
           />
         </div>
         <div class="mb-3">
@@ -475,6 +510,7 @@ const updateMap = async event => {
               {{ event.seat }}
             </p>
             <p><strong>section_bottom:</strong> {{ event.section_bottom }}</p>
+            <p><strong>No row text:</strong> {{ event.no_row_text }}</p>
             <p>
               <strong>Section:</strong> {{ event.section }} |
               <strong>Date/Place:</strong> {{ event.date_place }}

@@ -89,6 +89,14 @@ onMounted(async () => {
           <img class="cancel" src="../assets/cancel.jpeg" alt="" />
         </RouterLink>
       </div>
+      <div class="top_new_design">
+        <div class="first">
+          <h4>MY TICKETS 2</h4>
+        </div>
+        <div class="second">
+          <h4>ADD-ONS</h4>
+        </div>
+      </div>
 
       <div class="main-stuff" v-if="showStuff">
         <div class="slide_container d-flex justify-content-center">
@@ -115,15 +123,17 @@ onMounted(async () => {
                       <h2>{{ ticket.sec }}</h2>
                     </div>
 
-                    <div>
+                    <div v-if="ticket.show_row">
                       <h4>ROW</h4>
                       <h2>{{ ticket.row }}</h2>
                     </div>
 
-                    <div>
+                    <div v-if="ticket.show_row">
                       <h4>SEAT</h4>
                       <h2>{{ ticket.seat }}</h2>
                     </div>
+
+                    <h2 v-if="!ticket.show_row">{{ ticket.no_row_text }}</h2>
                   </div>
                 </div>
                 <div class="second position-relative">
@@ -146,7 +156,6 @@ onMounted(async () => {
               </div>
             </SwiperSlide>
           </Swiper>
-          
         </div>
         <div class="buttons-ts d-flex align-items-center">
           <button @click="openBottomSheet">Transfer</button>
@@ -334,6 +343,31 @@ onMounted(async () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.top_new_design {
+  background-color: #0157ea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 4%;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
+.top_new_design div {
+  width: 50%;
+  padding: 15px 0px;
+}
+.top_new_design .first {
+  border-bottom: 4.5px solid white;
+}
+.top_new_design h4 {
+  text-align: center;
+  font-size: 17px;
+  color: white;
+  margin-bottom: 0px;
+  font-family: Poppins;
+}
 .transfer_form .first_header h4 {
   font-size: 17px;
   margin-bottom: 0px;
@@ -591,8 +625,8 @@ onMounted(async () => {
 .slide-event .first .row-seat {
   font-family: 'Poppins', sans-serif;
   text-align: center;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 .slide-event .first .row-seat h4 {
   color: #f5f5f5e6;
@@ -602,7 +636,7 @@ onMounted(async () => {
 .slide-event .first .row-seat h2 {
   color: white;
   font-size: 20px;
-  font-family: Helvetica;
+  font-family: Poppins;
   font-weight: 600;
 }
 .slide-event .first .header {
@@ -619,7 +653,7 @@ onMounted(async () => {
   position: absolute;
 }
 .main-stuff {
-  margin-top: 13%;
+  margin-top: 24%;
 }
 
 .custom-checkbox {
