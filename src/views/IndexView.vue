@@ -77,6 +77,7 @@ onUnmounted(() => {
     </video>
   </div>
   <div class="splash2" v-if="showSplash2">
+    <!-- <div class="splash2"> -->
     <video autoplay muted loop playsinline>
       <source src="/test.mp4" type="video/mp4" />
       Your browser does not support the video tag.
@@ -108,7 +109,7 @@ onUnmounted(() => {
 }
 .splash2 video {
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: 50%;
   width: 100%;
   height: 100%;
