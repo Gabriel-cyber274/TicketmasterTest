@@ -419,6 +419,7 @@ onMounted(async () => {
   left: 8%;
   font-size: 26px;
   font-weight: 500;
+  padding-right: 12px;
 }
 
 .map iframe {
@@ -574,10 +575,11 @@ onMounted(async () => {
 }
 .slide-event .fourth {
   background: #0157ea;
-  width: 100%;
-  height: 40px;
+  width: 96%;
+  height: 2px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  margin: auto;
 }
 
 .slide-event .third {
