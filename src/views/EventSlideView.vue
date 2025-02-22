@@ -182,7 +182,12 @@ onMounted(async () => {
             <div
               class="third mb-3 d-flex align-items-center justify-content-between px-3"
             >
-              <h2>Sec {{ tickets[0].sec }}, Row {{ tickets[0].row }}</h2>
+              <h2>
+                Sec {{ tickets[0].sec
+                }}<span v-if="tickets[0].show_row"
+                  >, Row {{ tickets[0].row }}</span
+                >
+              </h2>
 
               <h6 class="d-flex align-items-center">
                 <i class="fas fa-ticket-alt ticketIcon me-1"></i>
@@ -265,26 +270,31 @@ onMounted(async () => {
                 </h4>
                 <h5 class="mt-2">
                   Sec <span>{{ tickets[0].sec }}</span
-                  >, Row <span>{{ tickets[0].row }}</span
-                  >, Seats
-                  <span
-                    v-for="(seat, seatIndex) in tickets.filter(
-                      (ticket, index) => checkedTickets[index],
-                    )"
-                    :key="seat.id"
-                  >
-                    <span>{{ seat.seat }}</span>
+                  ><template v-if="tickets[0].show_row">
+                    , Row <span>{{ tickets[0].row }}</span>
+                  </template>
+                  <template v-if="tickets[0].show_row">
+                    , Seats
                     <span
-                      v-if="
-                        seatIndex !==
-                        tickets.filter((ticket, index) => checkedTickets[index])
-                          .length -
-                          1
-                      "
+                      v-for="(seat, seatIndex) in tickets.filter(
+                        (ticket, index) => checkedTickets[index],
+                      )"
+                      :key="seat.id"
                     >
-                      ,
+                      <span>{{ seat.seat }}</span>
+                      <span
+                        v-if="
+                          seatIndex !==
+                          tickets.filter(
+                            (ticket, index) => checkedTickets[index],
+                          ).length -
+                            1
+                        "
+                      >
+                        ,
+                      </span>
                     </span>
-                  </span>
+                  </template>
                 </h5>
               </div>
               <div class="form mt-4">
