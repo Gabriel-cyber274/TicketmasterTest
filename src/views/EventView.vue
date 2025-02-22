@@ -163,7 +163,7 @@ p {
   font-size: 18px;
 }
 .image-and-date .ticket-details p {
-  font-size: 13px;
+  font-size: 11px;
 }
 .image-and-date .ticket-details h6 {
   font-size: 12px;
