@@ -133,7 +133,9 @@ onMounted(async () => {
                       <h2>{{ ticket.seat }}</h2>
                     </div>
 
-                    <h2 v-if="!ticket.show_row">{{ ticket.no_row_text }}</h2>
+                    <h2 class="rowtext" v-if="!ticket.show_row">
+                      {{ ticket.no_row_text }}
+                    </h2>
                   </div>
                 </div>
                 <div class="second position-relative">
@@ -417,7 +419,7 @@ onMounted(async () => {
   color: #80817e;
   top: 15%;
   left: 8%;
-  font-size: 26px;
+  font-size: 19px;
   font-weight: 500;
   padding-right: 12px;
 }
@@ -619,7 +621,7 @@ onMounted(async () => {
   margin-bottom: 0px;
 }
 .slide-event .second div p {
-  font-size: 12px;
+  font-size: 10px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 6px;
@@ -701,5 +703,8 @@ onMounted(async () => {
   border-radius: 1px;
   border: none;
   padding: 7px 32px !important;
+}
+.slide-event .first .row-seat .rowtext {
+  font-size: 17px;
 }
 </style>
