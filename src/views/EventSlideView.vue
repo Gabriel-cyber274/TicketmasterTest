@@ -91,7 +91,7 @@ onMounted(async () => {
       </div>
       <div class="top_new_design">
         <div class="first">
-          <h4>MY TICKETS 2</h4>
+          <h4>MY TICKETS {{ tickets.length }}</h4>
         </div>
         <div class="second">
           <h4>ADD-ONS</h4>
