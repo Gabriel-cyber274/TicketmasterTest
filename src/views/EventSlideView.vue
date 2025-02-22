@@ -631,7 +631,7 @@ onMounted(async () => {
   margin-bottom: 0px;
 }
 .slide-event .second div p {
-  font-size: 10px;
+  font-size: clamp(10px, 0.8rem, 13px);
   text-align: center;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 6px;
