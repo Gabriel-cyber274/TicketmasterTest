@@ -639,8 +639,8 @@ onMounted(async () => {
 .slide-event .first .row-seat {
   font-family: 'Poppins', sans-serif;
   text-align: center;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
 }
 .slide-event .first .row-seat h4 {
   color: #f5f5f5e6;
