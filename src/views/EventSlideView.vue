@@ -113,7 +113,7 @@ onMounted(async () => {
             <SwiperSlide v-for="(ticket, index) in tickets" :key="ticket.id">
               <div class="slide-event">
                 <div class="first">
-                  <div class="header">Artist Registration Sale</div>
+                  <div class="header">{{ ticket.ticket_header }}</div>
 
                   <div
                     class="row-seat d-flex px-4 py-4 justify-content-between align-items-center"

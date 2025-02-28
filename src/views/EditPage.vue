@@ -16,6 +16,7 @@ const showRow = ref(true)
 const rowText = ref('')
 const row = ref('')
 const seat = ref('')
+const ticketHeader = ref('')
 
 // Define a reactive object to hold the items
 const state = reactive({
@@ -211,6 +212,7 @@ const postTicket = async event => {
       section: section,
       date_place: datePlace,
       url: url,
+      ticket_header: ticketHeader.value,
       section_bottom: section_bottom,
     })
 
@@ -224,6 +226,11 @@ const postTicket = async event => {
     }))
     state.events = fetchedItems3
     rowText.value = ''
+    seat.value = ''
+    ticketHeader.value = ''
+    row.value = ''
+    rowText.value = ''
+
     event.target.reset()
 
     // Auto hide the success message after 3 seconds
@@ -425,6 +432,18 @@ const updateMap = async event => {
             placeholder="Weekends with Adele"
           />
         </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Ticket Header</label
+          >
+          <input
+            type="text"
+            v-model="ticketHeader"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Artist Registration Sale"
+          />
+        </div>
         <div class="mb-3" v-if="showRow">
           <label for="exampleFormControlInput1" class="form-label">Row</label>
           <input
@@ -511,6 +530,7 @@ const updateMap = async event => {
             </p>
             <p><strong>section_bottom:</strong> {{ event.section_bottom }}</p>
             <p><strong>No row text:</strong> {{ event.no_row_text }}</p>
+            <p><strong>Ticket header:</strong> {{ event.ticket_header }}</p>
             <p>
               <strong>Section:</strong> {{ event.section }} |
               <strong>Date/Place:</strong> {{ event.date_place }}
