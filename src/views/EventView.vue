@@ -161,6 +161,8 @@ p {
 }
 .image-and-date .ticket-details h2 {
   font-size: 18px;
+  font-family: Arial;
+  padding: 3px 0px;
 }
 .image-and-date .ticket-details p {
   font-size: clamp(11px, 0.9rem, 14px);

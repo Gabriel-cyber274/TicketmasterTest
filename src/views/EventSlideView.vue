@@ -410,6 +410,8 @@ onMounted(async () => {
   font-size: 14px;
   color: #646060;
   padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .transfer_form .form textarea {
   width: 100%;
@@ -422,6 +424,8 @@ onMounted(async () => {
   max-height: 70px;
   outline: none;
   min-height: 70px;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .map-img h3 {
@@ -627,8 +631,10 @@ onMounted(async () => {
   align-items: center;
 }
 .slide-event .second div h2 {
-  font-size: 19px;
+  font-size: 17px;
   margin-bottom: 0px;
+  font-family: 'Arial';
+  padding: 3px 7px;
 }
 .slide-event .second div p {
   font-size: clamp(10px, 0.8rem, 13px);
@@ -649,7 +655,7 @@ onMounted(async () => {
 }
 .slide-event .first .row-seat h2 {
   color: white;
-  font-size: 18px;
+  font-size: 19px;
   font-family: Poppins;
   font-weight: 600;
 }
@@ -715,6 +721,6 @@ onMounted(async () => {
   padding: 7px 32px !important;
 }
 .slide-event .first .row-seat .rowtext {
-  font-size: 16px;
+  font-size: 18px;
 }
 </style>
