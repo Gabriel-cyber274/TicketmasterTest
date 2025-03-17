@@ -258,12 +258,12 @@ onMounted(async () => {
         </BottomSheet2>
 
         <Transfer :isVisible="showModal3" @close="closeBottomSheet3">
-          <div class="bottom-modalstuff" style="height: 100vh">
-            <div class="first py-3">
+          <div class="bottom-modalstuff" style="">
+            <!-- <div class="first py-3">
               <h2>TICKETS</h2>
-            </div>
+            </div> -->
             <div class="transfer_form p-3">
-              <div class="first_header">
+              <!-- <div class="first_header">
                 <h4>
                   {{ checkedTickets.filter(isChecked => isChecked).length }}
                   Tickets Selected
@@ -296,19 +296,39 @@ onMounted(async () => {
                     </span>
                   </template>
                 </h5>
+              </div> -->
+              <div class="transfer-n1 mt-3">
+                <div class="lin mb-3"></div>
+                <h1>RECIPIENT DETAILS</h1>
               </div>
+
               <div class="form mt-4">
                 <div class="mb-2">
-                  <label for="" class="mb-1">Email or Mobile Number</label>
-                  <input type="text" name="" id="" />
-                </div>
-                <div class="mb-2">
                   <label for="" class="mb-1">First Name</label>
-                  <input type="text" name="" id="" />
+                  <input
+                    type="text"
+                    placeholder="Enter First Name"
+                    name=""
+                    id=""
+                  />
                 </div>
                 <div class="mb-2">
                   <label for="" class="mb-1">Last Name</label>
-                  <input type="text" name="" id="" />
+                  <input
+                    type="text"
+                    placeholder="Enter Last Name"
+                    name=""
+                    id=""
+                  />
+                </div>
+                <div class="mb-2">
+                  <label for="" class="mb-1">Email</label>
+                  <input
+                    type="email"
+                    placeholder="Enter Email Address"
+                    name=""
+                    id=""
+                  />
                 </div>
                 <div class="mb-2">
                   <label for="" class="mb-1">Note</label>
@@ -355,6 +375,19 @@ onMounted(async () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.transfer_form .transfer-n1 .lin {
+  width: 30px;
+  height: 3px;
+  background: black;
+}
+
+.transfer_form .transfer-n1 h1 {
+  font-size: 19px;
+  font-weight: 600;
+  font-family: Roboto;
+}
 .top_new_design {
   background-color: #0157ea;
   display: flex;
@@ -398,9 +431,10 @@ onMounted(async () => {
 .transfer_form .form label {
   font-size: 14px;
   margin-bottom: 0px;
-  color: #918b8be6;
+  color: #000000cf;
   font-family: Poppins;
   display: block;
+  font-weight: 600;
 }
 .transfer_form .form input {
   width: 100%;
@@ -436,6 +470,7 @@ onMounted(async () => {
   font-size: 19px;
   font-weight: 500;
   padding-right: 12px;
+  font-family: Roboto;
 }
 
 .map iframe {
@@ -444,6 +479,8 @@ onMounted(async () => {
 }
 .map-img {
   width: 100%;
+  position: fixed !important;
+  bottom: 0;
 }
 .bottom-modalstuff .fifth {
   background: #9a9a9a66;
@@ -493,6 +530,7 @@ onMounted(async () => {
 }
 .bottom-modalstuff .third h2 {
   font-size: 15px;
+  font-family: Roboto;
 }
 .bottom-modalstuff .third h6 {
   font-size: 15px;
@@ -513,8 +551,8 @@ onMounted(async () => {
   margin-bottom: 0;
   font-size: 18px;
   font-weight: 600;
+  font-family: Roboto;
 }
-
 .swiper-pagination {
   position: relative; /* Change from absolute to relative */
   bottom: 0; /* Adjust the position */
@@ -605,13 +643,15 @@ onMounted(async () => {
 .slide-event .third h1 {
   text-align: center;
   font-size: 16px;
-  margin-bottom: 4px;
-  margin-top: 4px;
+  margin-bottom: -6px;
+  margin-top: 35px;
+  font-family: Roboto;
   font-weight: 500;
 }
 .slide-event .third h3 {
   text-align: center;
   font-size: 15px;
+  font-family: Roboto;
   color: #0157ead6;
 }
 .slide-event .second img {
@@ -655,8 +695,8 @@ onMounted(async () => {
 }
 .slide-event .first .row-seat h2 {
   color: white;
-  font-size: 19px;
-  font-family: Poppins;
+  font-size: 20px;
+  font-family: Roboto;
   font-weight: 600;
 }
 .slide-event .first .header {

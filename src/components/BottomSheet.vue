@@ -45,6 +45,8 @@ const closeSheet = () => {
   background: white;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 .close-btn {
   background: #e2e6e9;
