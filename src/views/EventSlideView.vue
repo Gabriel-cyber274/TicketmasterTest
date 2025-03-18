@@ -349,9 +349,9 @@ onMounted(async () => {
           </div>
         </Transfer>
 
-        <!-- <img class="pb-4" src="../assets/mapstuff.jpg" alt="" /> -->
         <div class="map-img px-3 position-relative">
-          <img class="pb-4" src="../assets/mapstuff2.jpeg" alt="" />
+          <!-- <img class="pb-4" src="../assets/mapstuff2.jpeg" alt="" /> -->
+          <img class="pb-4" src="../assets/sbmimap.jpg" alt="" />
 
           <h3>{{ mapName[0]?.location }}</h3>
         </div>
@@ -644,8 +644,7 @@ onMounted(async () => {
   text-align: center;
   font-size: 16px;
   margin-bottom: -6px;
-  margin-top: 35px;
-  font-family: Roboto;
+  margin-top: 33px;
   font-weight: 500;
 }
 .slide-event .third h3 {
