@@ -479,8 +479,6 @@ onMounted(async () => {
 }
 .map-img {
   width: 100%;
-  position: fixed !important;
-  bottom: 0;
 }
 .bottom-modalstuff .fifth {
   background: #9a9a9a66;
