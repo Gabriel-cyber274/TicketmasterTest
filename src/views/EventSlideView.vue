@@ -642,7 +642,7 @@ onMounted(async () => {
 }
 .slide-event .third h1 {
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: -6px;
   margin-top: 33px;
   font-weight: 500;
