@@ -640,10 +640,10 @@ onMounted(async () => {
 }
 .slide-event .third h1 {
   text-align: center;
-  font-size: 14px;
-  margin-bottom: -6px;
-  margin-top: 33px;
+  font-size: 13px;
+  margin-top: 24px;
   font-weight: 500;
+  margin-bottom: 2px;
 }
 .slide-event .third h3 {
   text-align: center;
@@ -692,7 +692,7 @@ onMounted(async () => {
 }
 .slide-event .first .row-seat h2 {
   color: white;
-  font-size: 20px;
+  font-size: 16.5px;
   font-family: Roboto;
   font-weight: 600;
 }
@@ -758,6 +758,6 @@ onMounted(async () => {
   padding: 7px 32px !important;
 }
 .slide-event .first .row-seat .rowtext {
-  font-size: 18px;
+  font-size: 17.5px;
 }
 </style>
