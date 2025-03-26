@@ -470,7 +470,7 @@ onMounted(async () => {
   font-size: 19px;
   font-weight: 500;
   padding-right: 12px;
-  font-family: Roboto;
+  font-family: Arial;
 }
 
 .map iframe {
