@@ -6,6 +6,7 @@ import {
   doc,
   updateDoc,
   addDoc,
+  serverTimestamp,
   deleteDoc,
 } from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
@@ -214,6 +215,7 @@ const postTicket = async event => {
       url: url,
       ticket_header: ticketHeader.value,
       section_bottom: section_bottom,
+      createdAt: serverTimestamp(),
     })
 
     state.successMessage = 'Ticket created successfully!' // Show success message

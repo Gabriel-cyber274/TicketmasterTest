@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import BottomNav from '../components/BottomNav.vue'
 import { ref, onMounted } from 'vue'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
 
 const isUpcoming = ref(true)
@@ -18,7 +18,15 @@ onMounted(async () => {
     loading.value = true
     const itemsCollection = collection(firestore, 'event')
     const snapshot = await getDocs(itemsCollection)
-    event.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    // event.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    event.value = snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .sort((a, b) => {
+        const aDate = a.createdAt?.toDate?.() ?? new Date(0) // fallback to epoch if undefined
+        const bDate = b.createdAt?.toDate?.() ?? new Date(0)
+        return aDate - bDate
+      })
+
     console.log('Fetched items:', event.value)
     loading.value = false
   } catch (err) {
