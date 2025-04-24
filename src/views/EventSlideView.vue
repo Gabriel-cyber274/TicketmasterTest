@@ -467,7 +467,7 @@ onMounted(async () => {
   color: #80817e;
   top: 15%;
   left: 8%;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 500;
   padding-right: 12px;
   font-family: Arial;
@@ -692,7 +692,7 @@ onMounted(async () => {
 }
 .slide-event .first .row-seat h2 {
   color: white;
-  font-size: 16.5px;
+  font-size: 19.5px;
   font-family: Roboto;
   font-weight: 600;
 }
