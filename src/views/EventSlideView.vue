@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
 import 'swiper/css'
@@ -59,37 +59,123 @@ const selectedSeats = () => {
   return tickets.value.filter((ticket, index) => checkedTickets.value[index])
 }
 
+// onMounted(async () => {
+//   if (route.query.event) {
+//     try {
+//       tickets.value = JSON.parse(route.query.event)
+//       checkedTickets.value = new Array(tickets.value.length).fill(false) // Update checkedTickets after tickets are loaded
+//       showStuff.value = true
+
+//       const itemsCollection = collection(firestore, 'map')
+//       const snapshot = await getDocs(itemsCollection)
+//       mapName.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+//       console.log('Fetched items:', mapName.value)
+//     } catch (e) {
+//       console.error('Error parsing event data:', e)
+//     }
+//   } else {
+//     console.error('No event query parameter found')
+//   }
+// })
+
+const timeLeft = ref({})
+
+let countdownIntervals = {}
+
+const calculateTimeLeft = targetTime => {
+  const now = new Date()
+  const targetDate = new Date(targetTime)
+  const difference = targetDate - now
+
+  if (difference <= 0) {
+    return {
+      days: '00',
+      hours: '00',
+      minutes: '00',
+      seconds: '00',
+      expired: true,
+    }
+  }
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+  const hours = Math.floor(
+    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  )
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+  return {
+    days: days.toString().padStart(2, '0'),
+    hours: hours.toString().padStart(2, '0'),
+    minutes: minutes.toString().padStart(2, '0'),
+    seconds: seconds.toString().padStart(2, '0'),
+    expired: false,
+  }
+}
+
+const startCountdown = (ticketId, targetTime) => {
+  // Initial calculation
+  timeLeft.value[ticketId] = calculateTimeLeft(targetTime)
+
+  // Only start countdown if not expired
+  if (!timeLeft.value[ticketId].expired) {
+    countdownIntervals[ticketId] = setInterval(() => {
+      timeLeft.value[ticketId] = calculateTimeLeft(targetTime)
+
+      if (timeLeft.value[ticketId].expired) {
+        clearInterval(countdownIntervals[ticketId])
+        delete countdownIntervals[ticketId]
+      }
+    }, 1000)
+  }
+}
+
 onMounted(async () => {
   if (route.query.event) {
     try {
       tickets.value = JSON.parse(route.query.event)
-      checkedTickets.value = new Array(tickets.value.length).fill(false) // Update checkedTickets after tickets are loaded
+      checkedTickets.value = new Array(tickets.value.length).fill(false)
       showStuff.value = true
+
+      // Initialize countdowns for tickets
+      tickets.value.forEach(ticket => {
+        // Use end_time if start_time is in the past, otherwise use start_time
+        const now = new Date()
+        const startTime = new Date(ticket.start_time)
+        const targetTime = startTime > now ? ticket.start_time : ticket.end_time
+
+        startCountdown(ticket.id, targetTime)
+      })
 
       const itemsCollection = collection(firestore, 'map')
       const snapshot = await getDocs(itemsCollection)
       mapName.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-      console.log('Fetched items:', mapName.value)
     } catch (e) {
       console.error('Error parsing event data:', e)
     }
-  } else {
-    console.error('No event query parameter found')
   }
+})
+
+onBeforeUnmount(() => {
+  // Clean up all intervals when component is destroyed
+  Object.values(countdownIntervals).forEach(interval => {
+    clearInterval(interval)
+  })
+  countdownIntervals = {}
 })
 </script>
 
 <template>
   <div class="main_container">
     <div class="main_sec">
-      <div class="fixed-top">
+      <div class="fixed-top top-ani">
         <!-- <img src="../assets/eventDH.jpeg" alt="" /> -->
         <img src="../assets/eventDH2.jpg" alt="" />
         <RouterLink to="/event">
           <img class="cancel" src="../assets/cancel.jpeg" alt="" />
         </RouterLink>
       </div>
-      <div class="top_new_design">
+      <div class="top_new_design fade-ani">
         <div class="first">
           <h4>MY TICKETS {{ tickets.length }}</h4>
         </div>
@@ -98,7 +184,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="main-stuff" v-if="showStuff">
+      <div class="main-stuff fade-ani" v-if="showStuff">
         <div class="slide_container d-flex justify-content-center">
           <Swiper
             :spaceBetween="14"
@@ -149,10 +235,41 @@ onMounted(async () => {
                   </div>
                 </div>
                 <div class="third px-4 py-4">
-                  <h1>{{ ticket.section_bottom }}</h1>
+                  <h1 v-if="ticket.start_time == ''">
+                    {{ ticket.section_bottom }}
+                  </h1>
+                  <h1 v-if="ticket.start_time != ''">
+                    Ticket will be ready in:
+                  </h1>
                   <!-- <img class="py-4" src="../assets/viewT.jpeg" alt="" /> -->
-                  <img class="py-4" src="../assets/viewT2.jpg" alt="" />
-                  <h3>Ticket Details</h3>
+                  <img
+                    v-if="ticket.start_time == ''"
+                    class="py-4"
+                    src="../assets/viewT2.jpg"
+                    alt=""
+                  />
+                  <div v-if="ticket.start_time != ''" class="timer mb-5">
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.days || '00' }}</h1>
+                      <h4>Day</h4>
+                    </div>
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.hours || '00' }}</h1>
+                      <h4>Hour</h4>
+                    </div>
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.minutes || '00' }}</h1>
+                      <h4>Min</h4>
+                    </div>
+                    <div class="box">
+                      <h1>{{ timeLeft[ticket.id]?.seconds || '00' }}</h1>
+                      <h4>Seconds</h4>
+                    </div>
+                  </div>
+
+                  <h3 :class="[ticket.start_time != '' && 'mb-3']">
+                    Ticket Details
+                  </h3>
                 </div>
                 <div class="fourth"></div>
               </div>
@@ -376,6 +493,53 @@ onMounted(async () => {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 80%;
+  margin: auto;
+}
+.timer .box h1 {
+  font-size: 26px !important;
+  font-weight: 600 !important;
+  text-align: center;
+  margin-top: 5px !important;
+  font-family: Poppins;
+}
+.timer .box h4 {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: Poppins;
+}
+
+.top-ani {
+  animation: topAnimation 0.4s ease-in 0s 1 forwards;
+  transform: translateY(-100%);
+}
+@keyframes topAnimation {
+  0% {
+    transform: translateY(1000%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fade-ani {
+  animation: fadeAnimation 0.7s ease-in 0.5s 1 forwards;
+  opacity: 0;
+}
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .transfer_form .transfer-n1 .lin {
   width: 30px;

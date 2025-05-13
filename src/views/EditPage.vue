@@ -17,6 +17,8 @@ const showRow = ref(true)
 const rowText = ref('')
 const row = ref('')
 const seat = ref('')
+const start_time = ref('')
+const end_time = ref('')
 const ticketHeader = ref('')
 
 // Define a reactive object to hold the items
@@ -212,6 +214,8 @@ const postTicket = async event => {
       sec: sec,
       section: section,
       date_place: datePlace,
+      start_time: start_time.value,
+      end_time: end_time.value,
       url: url,
       ticket_header: ticketHeader.value,
       section_bottom: section_bottom,
@@ -512,6 +516,32 @@ const updateMap = async event => {
             placeholder="SECTION 108"
           />
         </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >start_time</label
+          >
+          <input
+            type="datetime-local"
+            v-model="start_time"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="enter start time"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >end_time</label
+          >
+          <input
+            type="datetime-local"
+            v-model="end_time"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="enter end time"
+          />
+        </div>
+
         <button type="submit" class="btn btn-primary">Create</button>
       </form>
     </div>
