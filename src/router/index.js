@@ -5,6 +5,9 @@ import AccountView from '../views/AccountView.vue'
 import EventView from '../views/EventView.vue'
 import EventSlideView from '../views/EventSlideView.vue'
 import EditPage from '../views/EditPage.vue'
+import UkIndexPage from '../views/uk/index.vue'
+import UkAccountPage from '../views/uk/Account.vue'
+import UkEventViewPage from '../views/uk/EventView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +37,21 @@ const router = createRouter({
       path: '/edit-page',
       name: 'edit page',
       component: EditPage,
+    },
+    {
+      path: '/uk-index',
+      name: 'uk index page',
+      component: UkIndexPage,
+    },
+    {
+      path: '/account2',
+      name: 'account 2',
+      component: UkAccountPage,
+    },
+    {
+      path: '/event2',
+      name: 'event2',
+      component: UkEventViewPage,
     },
     {
       path: '/about',

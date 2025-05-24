@@ -177,7 +177,8 @@ onBeforeUnmount(() => {
       </div>
       <div class="top_new_design fade-ani">
         <div class="first">
-          <h4>MY TICKETS {{ tickets.length }}</h4>
+          <!-- <h4>MY TICKETS {{ tickets.length }}</h4> -->
+          <h4>MY TICKETS</h4>
         </div>
         <div class="second">
           <h4>ADD-ONS</h4>
@@ -196,7 +197,7 @@ onBeforeUnmount(() => {
             class="pe-5"
           >
             <!-- Iterate over tickets here -->
-            <SwiperSlide v-for="(ticket, index) in tickets" :key="ticket.id">
+            <SwiperSlide v-for="ticket in tickets" :key="ticket.id">
               <div class="slide-event">
                 <div class="first">
                   <div class="header">{{ ticket.ticket_header }}</div>
