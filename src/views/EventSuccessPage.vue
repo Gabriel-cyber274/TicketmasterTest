@@ -8,12 +8,11 @@ import 'swiper/css/pagination'
 import BottomSheet from '../components/BottomSheet.vue'
 import BottomSheet2 from '../components/BottomSheet2.vue'
 import Transfer from '../components/TransferSheet.vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { collection, getDocs } from 'firebase/firestore'
 import { firestore } from '../firebaseConfig'
 
 const route = useRoute()
-const router = useRouter()
 
 // import required modules
 import { Pagination } from 'swiper/modules'
@@ -22,25 +21,12 @@ const tickets = ref([])
 const showStuff = ref(false)
 const checkedTickets = ref([])
 
-const firstname = ref('')
-const lastname = ref('')
-const email = ref('')
-const note = ref('')
-
 console.log(JSON.parse(route.query.event))
 
 const showModal = ref(false)
 const showModal2 = ref(false)
 const showModal3 = ref(false)
-const isTransferred = ref(false)
 const isChecked = ref(false)
-
-const activeSlideIndex = ref(0)
-
-const handleSlideChange = swiper => {
-  activeSlideIndex.value = swiper.realIndex
-  console.log('Current slide index:', activeSlideIndex.value)
-}
 
 const transferLoading = ref(false)
 
@@ -48,25 +34,9 @@ const transferLoad = () => {
   transferLoading.value = true
   setTimeout(() => {
     transferLoading.value = false
-    showModal2.value = false
-    showModal3.value = false
-    showModal.value = false
-    isTransferred.value = true
 
-    // router.push(
-    //   `/event/details/success?event=${encodeURIComponent(JSON.stringify(selectedSeats()))}`,
-    // )
-
-    console.log(selectedSeats(), 'selected')
-    console.log(checkedTickets.value, 'select2')
+    console.log(selectedSeats(), 'checked')
   }, 3000)
-}
-
-const cancelTicket = index => {
-  isTransferred.value = false
-
-  // checkedTickets.value = new Array(tickets.value.length).fill(false)
-  checkedTickets.value[index] = false
 }
 
 const mapName = ref([])
@@ -216,15 +186,6 @@ onBeforeUnmount(() => {
           <img class="cancel" src="../assets/cancel.jpeg" alt="" />
         </RouterLink>
       </div>
-      <div class="top_new_design fade-ani">
-        <div class="first">
-          <h4>MY TICKETS {{ tickets.length }}</h4>
-          <!-- <h4>MY TICKETS</h4> -->
-        </div>
-        <div class="second">
-          <h4>ADD-ONS</h4>
-        </div>
-      </div>
 
       <div class="main-stuff fade-ani" v-if="showStuff">
         <div class="slide_container d-flex justify-content-center">
@@ -236,26 +197,15 @@ onBeforeUnmount(() => {
             :pagination="{ clickable: true }"
             :modules="[Pagination]"
             class="pe-5"
-            @slideChange="handleSlideChange"
           >
             <!-- Iterate over tickets here -->
-            <SwiperSlide v-for="(ticket, index) in tickets" :key="ticket.id">
+            <SwiperSlide v-for="ticket in tickets" :key="ticket.id">
               <div class="slide-event">
                 <div class="first">
-                  <div
-                    :class="[
-                      checkedTickets[index] && isTransferred && 'sGrey2',
-                      'header',
-                    ]"
-                  >
-                    {{ ticket.ticket_header }}
-                  </div>
+                  <div class="header">{{ ticket.ticket_header }}</div>
 
                   <div
-                    :class="[
-                      checkedTickets[index] && isTransferred && 'sGrey1',
-                      'row-seat d-flex px-4 py-4 justify-content-between align-items-center',
-                    ]"
+                    class="row-seat d-flex px-4 py-4 justify-content-between align-items-center"
                   >
                     <div>
                       <h4>SEC</h4>
@@ -286,80 +236,43 @@ onBeforeUnmount(() => {
                       {{ ticket.date_place }}
                     </p>
                   </div>
-                  <div
-                    class="overflow-icon"
-                    v-if="checkedTickets[index] && isTransferred"
-                  >
-                    <svg
-                      width="40"
-                      height="40"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#1fa41f"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  v-if="checkedTickets[index] && isTransferred"
-                  class="sent-box d-flex justify-content-center py-1"
-                >
-                  <h2>Sent</h2>
                 </div>
                 <div class="third px-4 py-4">
-                  <div v-if="!(checkedTickets[index] && isTransferred)">
-                    <h1 v-if="ticket.start_time == ''">
-                      {{ ticket.section_bottom }}
-                    </h1>
-                    <h1 v-if="ticket.start_time != ''">
-                      Ticket will be ready in:
-                    </h1>
-                    <!-- <img class="py-4" src="../assets/viewT.jpeg" alt="" /> -->
-                    <img
-                      v-if="ticket.start_time == ''"
-                      class="py-4"
-                      src="../assets/viewT2.jpg"
-                      alt=""
-                    />
-                    <div v-if="ticket.start_time != ''" class="timer mb-5">
-                      <div class="box me-3">
-                        <h1>{{ timeLeft[ticket.id]?.days || '00' }}</h1>
-                        <h4>Day</h4>
-                      </div>
-                      <div class="box me-3">
-                        <h1>{{ timeLeft[ticket.id]?.hours || '00' }}</h1>
-                        <h4>Hour</h4>
-                      </div>
-                      <div class="box me-3">
-                        <h1>{{ timeLeft[ticket.id]?.minutes || '00' }}</h1>
-                        <h4>Min</h4>
-                      </div>
-                      <div class="box">
-                        <h1>{{ timeLeft[ticket.id]?.seconds || '00' }}</h1>
-                        <h4>Seconds</h4>
-                      </div>
+                  <h1 v-if="ticket.start_time == ''">
+                    {{ ticket.section_bottom }}
+                  </h1>
+                  <h1 v-if="ticket.start_time != ''">
+                    Ticket will be ready in:
+                  </h1>
+                  <!-- <img class="py-4" src="../assets/viewT.jpeg" alt="" /> -->
+                  <img
+                    v-if="ticket.start_time == ''"
+                    class="py-4"
+                    src="../assets/viewT2.jpg"
+                    alt=""
+                  />
+                  <div v-if="ticket.start_time != ''" class="timer mb-5">
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.days || '00' }}</h1>
+                      <h4>Day</h4>
                     </div>
-
-                    <h3 :class="[ticket.start_time != '' && 'mb-3']">
-                      Ticket Details
-                    </h3>
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.hours || '00' }}</h1>
+                      <h4>Hour</h4>
+                    </div>
+                    <div class="box me-3">
+                      <h1>{{ timeLeft[ticket.id]?.minutes || '00' }}</h1>
+                      <h4>Min</h4>
+                    </div>
+                    <div class="box">
+                      <h1>{{ timeLeft[ticket.id]?.seconds || '00' }}</h1>
+                      <h4>Seconds</h4>
+                    </div>
                   </div>
-                  <div
-                    class="success-p"
-                    v-if="checkedTickets[index] && isTransferred"
-                  >
-                    <h1 class="f1">1 ticket sent to</h1>
-                    <p>{{ firstname }} {{ lastname }} {{ email }}</p>
-                    <p>Order 6-45669/GDT</p>
 
-                    <h3 class="mt-2 mb-3" @click="cancelTicket(index)">
-                      Cancel Transfer
-                    </h3>
-                  </div>
+                  <h3 :class="[ticket.start_time != '' && 'mb-3']">
+                    Ticket Details
+                  </h3>
                 </div>
                 <div class="fourth"></div>
               </div>
@@ -367,233 +280,8 @@ onBeforeUnmount(() => {
           </Swiper>
         </div>
         <div class="buttons-ts d-flex align-items-center">
-          <button
-            :class="[
-              checkedTickets[activeSlideIndex] && isTransferred ? 'grey' : '',
-            ]"
-            @click="openBottomSheet"
-          >
-            Transfer
-          </button>
+          <button class="grey" @click="openBottomSheet">Transfer</button>
           <button class="grey">Sell</button>
-        </div>
-
-        <BottomSheet :isVisible="showModal" @close="closeBottomSheet">
-          <div class="bottom-modalstuff">
-            <div class="first py-3">
-              <h2>SELECT TICKET TO TRANSFER</h2>
-            </div>
-
-            <div class="second px-3 my-4">
-              <div class="info d-flex align-items-center p-3">
-                <i class="fas fa-circle-info infoIcon"></i>
-                <p class="ms-2 mb-0">
-                  Only transfer tickets to people you know and trust to ensure
-                  everyone stays safe
-                </p>
-              </div>
-            </div>
-            <div
-              class="third mb-3 d-flex align-items-center justify-content-between px-3"
-            >
-              <h2>
-                Sec {{ tickets[0].sec
-                }}<span v-if="tickets[0].show_row"
-                  >, Row {{ tickets[0].row }}</span
-                >
-              </h2>
-
-              <h6 class="d-flex align-items-center">
-                <i class="fas fa-ticket-alt ticketIcon me-1"></i>
-                {{ tickets.length }} tickets
-              </h6>
-            </div>
-            <div class="fourth pb-4 px-3 d-flex align-items-center">
-              <div
-                class="seat me-3"
-                v-for="(ticket, index) in tickets"
-                :key="ticket.id"
-              >
-                <div class="firstS py-2">
-                  <h2>SEAT {{ ticket.seat }}</h2>
-                </div>
-                <div class="secondD py-3">
-                  <div class="checkbox-container">
-                    <input
-                      type="checkbox"
-                      v-model="checkedTickets[index]"
-                      :id="'customCheckbox' + index"
-                      class="custom-checkbox"
-                    />
-                    <label
-                      :for="'customCheckbox' + index"
-                      class="checkbox-label"
-                    ></label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="fifth d-flex align-items-center justify-content-between p-3 mt-3"
-            >
-              <h3>
-                {{ checkedTickets.filter(isChecked => isChecked).length }}
-                Selected
-              </h3>
-
-              <h2 @click="transferToFunc" class="d-flex align-items-center">
-                TRANSFER TO <i class="fas fa-chevron-right ms-2"></i>
-              </h2>
-            </div>
-          </div>
-        </BottomSheet>
-
-        <BottomSheet2 :isVisible="showModal2" @close="closeBottomSheet2">
-          <div class="bottom-modalstuff">
-            <div class="first py-3">
-              <h2>TICKET TO</h2>
-            </div>
-            <div class="transfer_cont px-3 mb-2 pt-4">
-              <img class="mb-2" src="../assets/contc.jpg" alt="" />
-              <img
-                @click="transferFunc"
-                class="mb-3"
-                src="../assets/manual.jpg"
-                alt=""
-              />
-              <img
-                class="mb-3"
-                style="width: 100%"
-                src="../assets/emailtext.jpg"
-                alt=""
-              />
-            </div>
-          </div>
-        </BottomSheet2>
-
-        <Transfer :isVisible="showModal3" @close="closeBottomSheet3">
-          <div class="bottom-modalstuff" style="">
-            <!-- <div class="first py-3">
-              <h2>TICKETS</h2>
-            </div> -->
-            <div class="transfer_form p-3">
-              <!-- <div class="first_header">
-                <h4>
-                  {{ checkedTickets.filter(isChecked => isChecked).length }}
-                  Tickets Selected
-                </h4>
-                <h5 class="mt-2">
-                  Sec <span>{{ tickets[0].sec }}</span
-                  ><template v-if="tickets[0].show_row">
-                    , Row <span>{{ tickets[0].row }}</span>
-                  </template>
-                  <template v-if="tickets[0].show_row">
-                    , Seats
-                    <span
-                      v-for="(seat, seatIndex) in tickets.filter(
-                        (ticket, index) => checkedTickets[index],
-                      )"
-                      :key="seat.id"
-                    >
-                      <span>{{ seat.seat }}</span>
-                      <span
-                        v-if="
-                          seatIndex !==
-                          tickets.filter(
-                            (ticket, index) => checkedTickets[index],
-                          ).length -
-                            1
-                        "
-                      >
-                        ,
-                      </span>
-                    </span>
-                  </template>
-                </h5>
-              </div> -->
-              <div class="transfer-n1 mt-3">
-                <div class="lin mb-3"></div>
-                <h1>RECIPIENT DETAILS</h1>
-              </div>
-
-              <div class="form mt-4">
-                <div class="mb-2">
-                  <label for="" class="mb-1">First Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter First Name"
-                    v-model="firstname"
-                    name=""
-                    id=""
-                  />
-                </div>
-                <div class="mb-2">
-                  <label for="" class="mb-1">Last Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter Last Name"
-                    v-model="lastname"
-                    name=""
-                    id=""
-                  />
-                </div>
-                <div class="mb-2">
-                  <label for="" class="mb-1">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Enter Email Address"
-                    name=""
-                    v-model="email"
-                    id=""
-                  />
-                </div>
-                <div class="mb-2">
-                  <label for="" class="mb-1">Note</label>
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
-                    v-model="note"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="fifth fifth2 d-flex align-items-center justify-content-between p-3 mt-3"
-            >
-              <h2 @click="closeBottomSheet3" class="d-flex align-items-center">
-                <i class="fas fa-chevron-left me-2"></i> Back
-              </h2>
-
-              <button
-                class="px-4 py-2"
-                @click="transferLoad"
-                style="
-                  width: 122.99px;
-                  height: 38px;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <span v-if="!transferLoading">Transfer</span>
-                <div v-if="transferLoading" style="transform: scale(0.7)">
-                  <div class="spinner-border text-light" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
-              </button>
-            </div>
-          </div>
-        </Transfer>
-
-        <div class="map-img px-3 position-relative">
-          <!-- <img class="pb-4" src="../assets/mapstuff2.jpeg" alt="" /> -->
-          <img class="pb-4" src="../assets/sbmimap.jpg" alt="" />
-
-          <h3>{{ mapName[0]?.location }}</h3>
         </div>
 
         <!-- <div class="map px-3" style="width: 100%">
@@ -617,56 +305,6 @@ onBeforeUnmount(() => {
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-.overflow-icon {
-  position: absolute;
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50%;
-  border: none;
-  background: #e9e9ea;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 10%;
-
-  /* Center content */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.success-p {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-.success-p h1 {
-  text-align: center;
-  font-size: 14px !important;
-  margin-top: 24px;
-  font-weight: 600 !important;
-  margin-bottom: 2px;
-}
-.success-p p {
-  margin-bottom: 0px !important;
-}
-.sent-box {
-  background: #1ba91f;
-}
-.sent-box h2 {
-  font-size: 14px;
-  font-family: Poppins;
-  color: white;
-  margin-bottom: 0px !important;
-}
-.sGrey2 {
-  background: #4f5a64 !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-.sGrey1 {
-  background: #576672 !important;
-}
 .timer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -686,32 +324,6 @@ onBeforeUnmount(() => {
   text-transform: uppercase;
   text-align: center;
   font-family: Poppins;
-}
-
-.top-ani {
-  animation: topAnimation 0.4s ease-in 0s 1 forwards;
-  transform: translateY(-100%);
-}
-@keyframes topAnimation {
-  0% {
-    transform: translateY(1000%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.fade-ani {
-  animation: fadeAnimation 0.7s ease-in 0.5s 1 forwards;
-  opacity: 0;
-}
-@keyframes fadeAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .transfer_form .transfer-n1 .lin {
@@ -1047,7 +659,7 @@ onBeforeUnmount(() => {
   position: absolute;
 }
 .main-stuff {
-  margin-top: 103px;
+  margin-top: 80px;
 }
 
 .custom-checkbox {
