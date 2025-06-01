@@ -63,7 +63,7 @@ const transferLoad = () => {
 }
 
 const cancelTicket = index => {
-  isTransferred.value = false
+  // isTransferred.value = false
 
   // checkedTickets.value = new Array(tickets.value.length).fill(false)
   checkedTickets.value[index] = false
