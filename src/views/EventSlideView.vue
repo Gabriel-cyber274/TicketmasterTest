@@ -354,6 +354,7 @@ onBeforeUnmount(() => {
                   >
                     <h1 class="f1">1 ticket sent to</h1>
                     <p>{{ firstname }} {{ lastname }} {{ email }}</p>
+                    <p>Waiting for recipient to claim</p>
                     <p>Order 6-45669/GDT</p>
 
                     <h3 class="mt-2 mb-3" @click="cancelTicket(index)">
