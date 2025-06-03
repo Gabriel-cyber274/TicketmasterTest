@@ -650,6 +650,7 @@ onBeforeUnmount(() => {
 }
 .success-p p {
   margin-bottom: 0px !important;
+  text-align: center;
 }
 .sent-box {
   background: #1ba91f;
@@ -933,7 +934,13 @@ onBeforeUnmount(() => {
   width: 100%;
   box-shadow: 0px 1px 3px black;
   border-radius: 10px;
+  height: 565px; /* Fixed height */
   margin-left: 25px;
+  position: relative;
+}
+/* Adjust the internal sections to fill the space */
+.slide-event .first {
+  flex: 0 0 auto; /* Don't grow or shrink */
 }
 .buttons-ts {
   width: 354px;
@@ -970,6 +977,10 @@ onBeforeUnmount(() => {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .slide-event .third {
@@ -1097,5 +1108,43 @@ onBeforeUnmount(() => {
 }
 .slide-event .first .row-seat .rowtext {
   font-size: 17.5px;
+}
+
+.slide-event .second {
+  flex: 0 0 auto;
+  position: relative;
+  height: 200px; /* Fixed height for image */
+}
+
+.slide-event .third {
+  flex: 1; /* Takes remaining space */
+  overflow: auto; /* Add scroll if content overflows */
+  background: white;
+  font-family: Arial;
+}
+
+.slide-event .fourth {
+  flex: 0 0 auto;
+}
+
+/* Adjust the image container */
+.slide-event .second img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+/* Ensure the timer section doesn't push content */
+.timer {
+  max-height: 100px;
+  overflow: hidden;
+}
+
+/* Make sure the ticket details section can scroll if needed */
+.slide-event .third > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
