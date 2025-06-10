@@ -688,6 +688,11 @@ onBeforeUnmount(() => {
   text-transform: uppercase;
   text-align: center;
   font-family: Poppins;
+  border: 1px solid #8080804f;
+  padding: 1px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .top-ani {
@@ -1146,5 +1151,17 @@ onBeforeUnmount(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-height: 812px) {
+  .slide-event {
+    height: 558px;
+  }
+  .buttons-ts {
+    margin-top: 10px;
+  }
+  .slide-event .third > div {
+    margin-top: -22px;
+  }
 }
 </style>
