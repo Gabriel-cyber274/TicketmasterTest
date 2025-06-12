@@ -1155,10 +1155,11 @@ onBeforeUnmount(() => {
 
 @media (max-height: 812px) {
   .slide-event {
-    height: 558px;
+    height: 554px;
   }
   .buttons-ts {
     margin-top: 10px;
+    margin-bottom: 11px;
   }
   .slide-event .third > div {
     margin-top: -22px;
