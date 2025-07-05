@@ -11,27 +11,29 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
     VitePWA({
-      manifest: {
-        name: 'TicketMaster App',
-        short_name: 'TicketMaster',
-        description: 'Your go-to app for ticket booking!',
-        start_url: '/uk-index',
-        display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#121212',
-        icons: [
-          {
-            src: '/ticketmL.jpg',
-            sizes: '192x192',
-            type: 'image/jpg',
-          },
-          {
-            src: '/ticketmL.jpg',
-            sizes: '512x512',
-            type: 'image/jpg',
-          },
-        ],
-      },
+      // manifest: {
+      //   name: 'TicketMaster App',
+      //   short_name: 'TicketMaster',
+      //   description: 'Your go-to app for ticket booking!',
+      //   start_url: '/',
+      //   display: 'standalone',
+      //   background_color: '#ffffff',
+      //   theme_color: '#121212',
+      //   icons: [
+      //     {
+      //       src: '/ticketmL.jpg',
+      //       sizes: '192x192',
+      //       type: 'image/jpg',
+      //     },
+      //     {
+      //       src: '/ticketmL.jpg',
+      //       sizes: '512x512',
+      //       type: 'image/jpg',
+      //     },
+      //   ],
+      // },
+
+      registerType: 'autoUpdate',
       workbox: {
         runtimeCaching: [
           {

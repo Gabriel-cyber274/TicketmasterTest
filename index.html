@@ -23,6 +23,19 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+
+    <!-- Dynamic manifest loader -->
+    <script>
+      const path = window.location.pathname
+      const isUK = path.startsWith('/uk-index')
+      const manifest = isUK ? '/manifest-uk-index.json' : '/manifest.json'
+
+      const link = document.createElement('link')
+      link.rel = 'manifest'
+      link.href = manifest
+      document.head.appendChild(link)
+    </script>
+    
   </head>
   <body>
     <div id="app"></div>

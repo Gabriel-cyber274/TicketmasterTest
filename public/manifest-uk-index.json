@@ -1,0 +1,20 @@
+{
+  "name": "TicketMaster UK",
+  "short_name": "UKTickets",
+  "start_url": "/uk-index",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0047ab",
+  "icons": [
+    {
+      "src": "/ticketmL.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "/ticketmL.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ]
+}
