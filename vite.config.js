@@ -15,7 +15,7 @@ export default defineConfig({
         name: 'TicketMaster App',
         short_name: 'TicketMaster',
         description: 'Your go-to app for ticket booking!',
-        start_url: '/',
+        start_url: '/uk-index',
         display: 'standalone',
         background_color: '#ffffff',
         theme_color: '#121212',
