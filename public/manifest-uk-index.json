@@ -4,7 +4,7 @@
   "start_url": "/uk-index",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0047ab",
+  "theme_color": "#121212",
   "icons": [
     {
       "src": "/ticketmL.jpg",
