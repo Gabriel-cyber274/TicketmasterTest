@@ -9,6 +9,8 @@ import EditPage from '../views/EditPage.vue'
 import UkIndexPage from '../views/uk/index.vue'
 import UkAccountPage from '../views/uk/Account.vue'
 import UkEventViewPage from '../views/uk/EventView.vue'
+import EventUKSlideView from '../views/uk/EventViewSlide.vue'
+import EventUkTransfer from '../views/uk/TransferPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +61,18 @@ const router = createRouter({
       path: '/event2',
       name: 'event2',
       component: UkEventViewPage,
+    },
+    {
+      path: '/event/uk-details',
+      name: 'event-uk-details',
+      component: EventUKSlideView,
+      props: route => ({ event: route.query.event }),
+    },
+    {
+      path: '/uk-transfer',
+      name: 'uk-transfer',
+      component: EventUkTransfer,
+      props: route => ({ event: route.query.event }),
     },
     {
       path: '/about',

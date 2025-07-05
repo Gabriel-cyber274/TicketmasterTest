@@ -14,8 +14,10 @@ import BottomNav from '../components/BottomNav.vue'
 import axios from 'axios' // Import axios for HTTP requests
 
 const showRow = ref(true)
+const isUk = ref(false)
 const rowText = ref('')
 const row = ref('')
+const header2 = ref('')
 const seat = ref('')
 const start_time = ref('')
 const end_time = ref('')
@@ -212,6 +214,8 @@ const postTicket = async event => {
       no_row_text: rowText.value,
       show_row: showRow.value,
       sec: sec,
+      is_uk: isUk.value,
+      ticket_header2: header2.value,
       section: section,
       date_place: datePlace,
       start_time: start_time.value,
@@ -415,6 +419,19 @@ const updateMap = async event => {
       <h1>Create Ticket</h1>
       <div class="form-check form-switch mb-3">
         <input
+          v-model="isUk"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckChecked"
+          checked
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked"
+          >Uk site</label
+        >
+      </div>
+      <div class="form-check form-switch mb-3">
+        <input
           v-model="showRow"
           class="form-check-input"
           type="checkbox"
@@ -450,6 +467,18 @@ const updateMap = async event => {
             placeholder="Artist Registration Sale"
           />
         </div>
+        <div class="mb-3" v-if="isUk">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Ticket Header2</label
+          >
+          <input
+            v-model="header2"
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="General Admission"
+          />
+        </div>
         <div class="mb-3" v-if="showRow">
           <label for="exampleFormControlInput1" class="form-label">Row</label>
           <input
@@ -482,6 +511,7 @@ const updateMap = async event => {
             placeholder="General Admission"
           />
         </div>
+
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
             >Section</label
@@ -567,6 +597,7 @@ const updateMap = async event => {
               <strong>Section:</strong> {{ event.section }} |
               <strong>Date/Place:</strong> {{ event.date_place }}
             </p>
+            <h1>site type: {{ event.is_uk ? 'UK' : 'US' }}</h1>
             <img
               :src="event.url"
               alt="Event image"

@@ -63,7 +63,7 @@ onMounted(async () => {
       </div>
       <RouterLink
         :to="{
-          name: 'event-details',
+          name: 'event-uk-details',
           query: { event: JSON.stringify(event) },
         }"
       >
@@ -81,7 +81,7 @@ onMounted(async () => {
               </p>
               <h6 class="d-flex align-items-center">
                 <i class="fas fa-ticket-alt ticketIcon me-1"></i>
-                {{ event.length }} tickets
+                {{ event.filter(e => e.is_uk == true).length }} tickets
               </h6>
             </div>
           </div>
@@ -140,7 +140,7 @@ onMounted(async () => {
 .image-and-date {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 240px;
 }
 .image-and-date .ti {
   position: absolute;

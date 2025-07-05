@@ -81,7 +81,7 @@ onMounted(async () => {
               </p>
               <h6 class="d-flex align-items-center">
                 <i class="fas fa-ticket-alt ticketIcon me-1"></i>
-                {{ event.length }} tickets
+                {{ event.filter(e => e.is_uk == false).length }} tickets
               </h6>
             </div>
           </div>
