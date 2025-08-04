@@ -206,6 +206,59 @@ onBeforeUnmount(() => {
   })
   countdownIntervals = {}
 })
+
+// Add these methods to handle iOS keyboard
+const isKeyboardOpen = ref(false)
+const originalViewportHeight = ref(0)
+
+const handleFocus = event => {
+  // Store original viewport height
+  originalViewportHeight.value = window.innerHeight
+
+  // Add a small delay to ensure keyboard is fully shown
+  setTimeout(() => {
+    isKeyboardOpen.value = true
+    // Prevent scroll behavior on iOS
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${window.scrollY}px`
+    document.body.style.width = '100%'
+  }, 100)
+}
+
+const handleBlur = event => {
+  setTimeout(() => {
+    isKeyboardOpen.value = false
+    // Restore scroll behavior
+    const scrollY = document.body.style.top
+    document.body.style.position = ''
+    document.body.style.top = ''
+    document.body.style.width = ''
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+  }, 100)
+}
+
+// Detect viewport height changes (keyboard open/close)
+const handleResize = () => {
+  const currentHeight = window.innerHeight
+  if (originalViewportHeight.value > 0) {
+    const heightDifference = originalViewportHeight.value - currentHeight
+    // If height decreased by more than 150px, likely keyboard is open
+    isKeyboardOpen.value = heightDifference > 150
+  }
+}
+
+onMounted(() => {
+  originalViewportHeight.value = window.innerHeight
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+  // Clean up body styles if component unmounts while keyboard is open
+  document.body.style.position = ''
+  document.body.style.top = ''
+  document.body.style.width = ''
+})
 </script>
 
 <template>
@@ -475,45 +528,11 @@ onBeforeUnmount(() => {
         </BottomSheet2>
 
         <Transfer :isVisible="showModal3" @close="closeBottomSheet3">
-          <div class="bottom-modalstuff" style="">
-            <!-- <div class="first py-3">
-              <h2>TICKETS</h2>
-            </div> -->
+          <div
+            class="bottom-modalstuff"
+            :class="{ 'keyboard-open': isKeyboardOpen }"
+          >
             <div class="transfer_form p-3">
-              <!-- <div class="first_header">
-                <h4>
-                  {{ checkedTickets.filter(isChecked => isChecked).length }}
-                  Tickets Selected
-                </h4>
-                <h5 class="mt-2">
-                  Sec <span>{{ tickets[0].sec }}</span
-                  ><template v-if="tickets[0].show_row">
-                    , Row <span>{{ tickets[0].row }}</span>
-                  </template>
-                  <template v-if="tickets[0].show_row">
-                    , Seats
-                    <span
-                      v-for="(seat, seatIndex) in tickets.filter(
-                        (ticket, index) => checkedTickets[index],
-                      )"
-                      :key="seat.id"
-                    >
-                      <span>{{ seat.seat }}</span>
-                      <span
-                        v-if="
-                          seatIndex !==
-                          tickets.filter(
-                            (ticket, index) => checkedTickets[index],
-                          ).length -
-                            1
-                        "
-                      >
-                        ,
-                      </span>
-                    </span>
-                  </template>
-                </h5>
-              </div> -->
               <div class="transfer-n1 mt-3">
                 <div class="lin mb-3"></div>
                 <h1>RECIPIENT DETAILS</h1>
@@ -521,43 +540,49 @@ onBeforeUnmount(() => {
 
               <div class="form mt-4">
                 <div class="mb-2">
-                  <label for="" class="mb-1">First Name</label>
+                  <label for="firstName" class="mb-1">First Name</label>
                   <input
+                    id="firstName"
                     type="text"
                     placeholder="Enter First Name"
                     v-model="firstname"
-                    name=""
-                    id=""
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    autocomplete="given-name"
                   />
                 </div>
                 <div class="mb-2">
-                  <label for="" class="mb-1">Last Name</label>
+                  <label for="lastName" class="mb-1">Last Name</label>
                   <input
+                    id="lastName"
                     type="text"
                     placeholder="Enter Last Name"
                     v-model="lastname"
-                    name=""
-                    id=""
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    autocomplete="family-name"
                   />
                 </div>
                 <div class="mb-2">
-                  <label for="" class="mb-1">Email</label>
+                  <label for="email" class="mb-1">Email</label>
                   <input
+                    id="email"
                     type="email"
                     placeholder="Enter Email Address"
-                    name=""
                     v-model="email"
-                    id=""
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    autocomplete="email"
                   />
                 </div>
                 <div class="mb-2">
-                  <label for="" class="mb-1">Note</label>
+                  <label for="note" class="mb-1">Note</label>
                   <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
+                    id="note"
                     v-model="note"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    placeholder="Add a note (optional)"
                   ></textarea>
                 </div>
               </div>
@@ -619,6 +644,60 @@ onBeforeUnmount(() => {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Prevent iOS viewport adjustments when keyboard appears */
+.transfer_form {
+  position: relative;
+}
+
+.transfer_form .form input,
+.transfer_form .form textarea {
+  width: 100%;
+  border: 1px solid #918b8be6;
+  outline: none;
+  font-size: 16px; /* Important: 16px prevents zoom on iOS */
+  color: #646060;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  /* Prevent iOS from adjusting the viewport */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.transfer_form .form input {
+  height: 41px;
+}
+
+.transfer_form .form textarea {
+  height: 70px;
+  max-height: 70px;
+  min-height: 70px;
+  max-width: 100%;
+  resize: none;
+}
+
+/* Fix for bottom modal positioning on iOS */
+.bottom-modal-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Prevent iOS keyboard from pushing modal up */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Alternative: Use viewport units that don't change with keyboard */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific styles */
+  .bottom-modal-container {
+    bottom: env(safe-area-inset-bottom, 0);
+    /* Use the initial viewport height */
+    max-height: calc(100vh - env(safe-area-inset-top, 0));
+  }
+}
 
 .overflow-icon {
   position: absolute;
