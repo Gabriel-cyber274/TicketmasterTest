@@ -35,6 +35,39 @@ onMounted(async () => {
     console.error('Error fetching items:', err)
   }
 })
+
+function formatEventDate(datePlace) {
+  if (!datePlace) return { formattedDate: '', place: '' }
+
+  // Split into date/time part and location
+  const [dateTimeStr, place] = datePlace.split('•').map(str => str.trim())
+
+  // Convert to Date object
+  const dateObj = new Date(dateTimeStr)
+
+  // Format parts
+  const options = {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }
+  const dateFormatted = dateObj
+    .toLocaleDateString('en-US', options)
+    .toUpperCase()
+
+  let hours = dateObj.getHours()
+  const minutes = dateObj.getMinutes().toString().padStart(2, '0')
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+  hours = hours % 12 || 12
+
+  const timeFormatted = `${hours}:${minutes}${ampm}`
+
+  return {
+    formattedDate: `${dateFormatted} . ${timeFormatted}`,
+    place,
+  }
+}
 </script>
 
 <template>
@@ -62,6 +95,7 @@ onMounted(async () => {
         <img src="../assets/loader.gif" width="20" height="20" alt="" />
       </div>
       <RouterLink
+        style="text-decoration: none"
         :to="{
           name: 'event-details',
           query: { event: JSON.stringify(event) },
@@ -71,18 +105,37 @@ onMounted(async () => {
           <!-- <div class="top-level">
             <h3 class="py-1">NEW DATE</h3>
           </div> -->
-          <div class="image-and-date">
-            <!-- <img class="ti" src="../assets/adele-pic.jfif" alt="" /> -->
-            <img class="ti" :src="event[0]?.url" alt="" />
-            <div class="ticket-details">
-              <h2>{{ event[0]?.event_name }}</h2>
-              <p class="mb-1">
-                {{ event[0]?.date_place }}
-              </p>
-              <h6 class="d-flex align-items-center">
-                <i class="fas fa-ticket-alt ticketIcon me-1"></i>
-                {{ event.filter(e => e.is_uk == false).length }} tickets
-              </h6>
+          <div class="new-designn">
+            <div class="image-and-date">
+              <img class="ti" :src="event[0]?.url" alt="" />
+              <!-- <div class="ticket-details">
+                <h2>{{ event[0]?.event_name }}</h2>
+                <p class="mb-1">
+                  {{ event[0]?.date_place }}
+                </p>
+                <h6 class="d-flex align-items-center">
+                  <i class="fas fa-ticket-alt ticketIcon me-1"></i>
+                  {{ event.filter(e => e.is_uk == false).length }} tickets
+                </h6>
+              </div> -->
+            </div>
+            <div class="new-d122 px-3 position-relative">
+              <div class="top-part px-3 py-2">
+                <h4>
+                  {{ formatEventDate(event[0]?.date_place).formattedDate }}
+                </h4>
+              </div>
+              <h1>{{ event[0]?.event_name }}</h1>
+              <div
+                class="d-flex mt-4 justify-content-between align-items-center"
+              >
+                <h2>{{ formatEventDate(event[0]?.date_place).place }}</h2>
+
+                <h6 class="d-flex align-items-center">
+                  <i class="fas fa-ticket-alt ticketIcon me-1"></i>
+                  x{{ event.filter(e => e.is_uk == false).length }}
+                </h6>
+              </div>
             </div>
           </div>
         </div>
@@ -96,6 +149,41 @@ onMounted(async () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.new-designn {
+  background: black;
+  padding-bottom: 20px;
+}
+.new-designn .new-d122 h1 {
+  font-size: 30px;
+  color: white;
+  position: relative;
+}
+.new-designn .new-d122 h2 {
+  font-size: 16px;
+  color: #ffffffad;
+}
+.new-designn .new-d122 h6 {
+  color: #ffffffad;
+}
+.new-designn .new-d122 .top-part {
+  background: black;
+  position: absolute;
+  left: 0;
+  top: -36px;
+}
+.new-designn .new-d122 .top-part h4 {
+  font-size: 14px;
+  color: white;
+}
+.new-designn .new-d122 h1::after {
+  content: '';
+  width: 70%;
+  height: 4px;
+  background: rgb(130 91 52 / 93%);
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+}
 .loader-stuff img {
   width: 40px;
   height: 40px;
