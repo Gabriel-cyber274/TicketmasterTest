@@ -338,7 +338,11 @@ onBeforeUnmount(() => {
                   <div class="position-absolute">
                     <h2>{{ ticket.event_name }}</h2>
                     <p class="px-1">
-                      {{ ticket.date_place }}
+                      {{
+                        ticket.date_place.slice(
+                          ticket.date_place.indexOf('/') + 1,
+                        )
+                      }}
                     </p>
                   </div>
                   <div
@@ -619,7 +623,12 @@ onBeforeUnmount(() => {
 
         <div class="map-img px-3 position-relative">
           <!-- <img class="pb-4" src="../assets/mapstuff2.jpeg" alt="" /> -->
-          <img class="pb-4" src="../assets/sbmimap.jpg" alt="" />
+          <img src="../assets/sss.jpg" alt="" />
+          <img
+            style="transform: rotate(180deg)"
+            src="../assets/sbmimap.jpg"
+            alt=""
+          />
 
           <h3>{{ mapName[0]?.location }}</h3>
         </div>
@@ -889,13 +898,14 @@ onBeforeUnmount(() => {
 
 .map-img h3 {
   position: absolute;
-  color: #80817e;
+  color: white;
   top: 15%;
   left: 8%;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 500;
   padding-right: 12px;
   font-family: Arial;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
 }
 
 .map iframe {

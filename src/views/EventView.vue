@@ -40,7 +40,9 @@ function formatEventDate(datePlace) {
   if (!datePlace) return { formattedDate: '', place: '' }
 
   // Split into date/time part and location
-  const [dateTimeStr, place] = datePlace.split('•').map(str => str.trim())
+  const [dateTimeStr, placeRaw] = datePlace.split('•').map(str => str.trim())
+
+  const place = placeRaw?.split('/')[0]?.trim() || ''
 
   // Convert to Date object
   const dateObj = new Date(dateTimeStr)
@@ -87,7 +89,7 @@ function formatEventDate(datePlace) {
             :class="['second', !isUpcoming && 'active']"
             @click="handleChange(false)"
           >
-            <h3>PAST (0)</h3>
+            <h3>PAST (3)</h3>
           </div>
         </div>
       </div>
@@ -132,7 +134,14 @@ function formatEventDate(datePlace) {
                 <h2>{{ formatEventDate(event[0]?.date_place).place }}</h2>
 
                 <h6 class="d-flex align-items-center">
-                  <i class="fas fa-ticket-alt ticketIcon me-1"></i>
+                  <!-- <i class="fas fa-ticket-alt ticketIcon me-1"></i> -->
+                  <img
+                    src="../assets/tic-icon.jpg"
+                    class="me-1"
+                    width="25"
+                    height="25"
+                    alt=""
+                  />
                   x{{ event.filter(e => e.is_uk == false).length }}
                 </h6>
               </div>
