@@ -911,7 +911,7 @@ onBeforeUnmount(() => {
   font-weight: 500;
   padding-right: 12px;
   font-family: Arial;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 1.6);
 }
 
 .map iframe {
