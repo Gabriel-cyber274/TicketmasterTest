@@ -43,10 +43,10 @@ onUnmounted(() => {
     <div class="main_sec" v-if="!showSplash2">
       <img class="fixed-top" src="../assets/topfixed.jpeg" alt="" />
       <div class="first_sec">
-        <img src="../assets/top.jpeg" alt="" />
-        <img src="../assets/new-d2/11.jpg" alt="" />
+        <img src="../assets/top2.jpeg" alt="" />
+        <img src="../assets/new-d2/111.jpeg" alt="" />
       </div>
-      <img src="../assets/new-d2/22.jpg" alt="" />
+      <img src="../assets/new-d2/222.jpeg" alt="" />
       <img src="../assets/new-d2/33.jpg" alt="" />
       <img src="../assets/new-d/new4.jpeg" alt="" />
       <img src="../assets/new-d/new5.jpeg" alt="" />
