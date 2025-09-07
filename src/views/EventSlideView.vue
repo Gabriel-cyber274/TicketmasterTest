@@ -273,8 +273,8 @@ onBeforeUnmount(() => {
       </div>
       <div class="top_new_design fade-ani">
         <div class="first">
-          <h4>MY TICKETS {{ tickets.length }}</h4>
-          <!-- <h4>MY TICKETS</h4> -->
+          <!-- <h4>MY TICKETS {{ tickets.length }}</h4> -->
+          <h4>MY TICKETS</h4>
         </div>
         <div class="second">
           <h4>ADD-ONS</h4>
@@ -300,10 +300,16 @@ onBeforeUnmount(() => {
                   <div
                     :class="[
                       checkedTickets[index] && isTransferred && 'sGrey2',
-                      'header',
+                      'header position-relative d-flex align-items-center justify-content-center',
                     ]"
                   >
                     {{ ticket.ticket_header }}
+                    <img
+                      class="position-absolute"
+                      style="right: 10px; width: 26px"
+                      src="../assets/info.jpeg"
+                      alt=""
+                    />
                   </div>
 
                   <div
@@ -381,7 +387,7 @@ onBeforeUnmount(() => {
                     <img
                       v-if="ticket.start_time == ''"
                       class="py-4"
-                      src="../assets/viewT2.jpg"
+                      src="../assets/viewT3.jpeg"
                       alt=""
                     />
                     <div v-if="ticket.start_time != ''" class="timer mb-5">
@@ -823,7 +829,7 @@ onBeforeUnmount(() => {
   font-family: Roboto;
 }
 .top_new_design {
-  background-color: #0157ea;
+  background-color: #121212;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -842,7 +848,7 @@ onBeforeUnmount(() => {
 }
 .top_new_design h4 {
   text-align: center;
-  font-size: 17px;
+  font-size: 14px;
   color: white;
   margin-bottom: 0px;
   font-family: Poppins;
@@ -928,7 +934,7 @@ onBeforeUnmount(() => {
   font-family: 'Poppins', sans-serif;
   margin-bottom: 0;
   font-size: 20px;
-  color: #0157ea;
+  color: #044deb;
 }
 .bottom-modalstuff .fourth {
   border-bottom: 2px solid #9a9a9a66;
@@ -940,7 +946,7 @@ onBeforeUnmount(() => {
 }
 .bottom-modalstuff .fourth .seat .firstS {
   text-align: center;
-  background: #0157ea;
+  background: #044deb;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-family: 'Poppins', sans-serif;
@@ -1019,7 +1025,7 @@ onBeforeUnmount(() => {
 }
 
 .swiper-pagination-bullet-active {
-  background: #0157ea;
+  background: #044deb;
 }
 
 .swiper-pagination-bullet:hover {
@@ -1062,12 +1068,12 @@ onBeforeUnmount(() => {
 }
 .slide-event .first {
   width: 100%;
-  background: #0157ea;
+  background: #044deb;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 .slide-event .fourth {
-  background: #0157ea;
+  background: #044deb;
   width: 96%;
   height: 2px;
   border-bottom-left-radius: 10px;
@@ -1094,7 +1100,7 @@ onBeforeUnmount(() => {
   text-align: center;
   font-size: 15px;
   font-family: Roboto;
-  color: #0157ead6;
+  color: #121212;
 }
 .slide-event .second img {
   height: 200px;
@@ -1194,7 +1200,7 @@ onBeforeUnmount(() => {
 }
 
 .bottom-modalstuff .fifth2 button {
-  background: #0157ea;
+  background: #044deb;
   color: white;
   font-size: 16px;
   text-align: center;
