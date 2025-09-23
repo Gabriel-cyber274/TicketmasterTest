@@ -32,7 +32,7 @@ onUnmounted(() => {
       <div class="first_sec">
         <img src="../../assets/top.jpeg" alt="" />
         <!-- <img src="../../assets/secondImg.jpeg" alt="" /> -->
-        <img src="../../assets/new-d/new1.jpeg" alt="" />
+        <img src="../../assets/new-d2/111.jpeg" alt="" />
       </div>
       <!-- <img src="../../assets/img1.jpeg" alt="" />
       <img src="../../assets/img2.jpeg" alt="" />
