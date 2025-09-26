@@ -284,7 +284,11 @@ function transferTickets(tickets) {
                   <div class="position-absolute">
                     <h2>{{ ticket.event_name }}</h2>
                     <p class="px-1">
-                      {{ ticket.date_place }}
+                      {{
+                        ticket.date_place.slice(
+                          ticket.date_place.indexOf('/') + 1,
+                        )
+                      }}
                     </p>
                   </div>
                   <div
