@@ -44,10 +44,10 @@ onUnmounted(() => {
       <img class="fixed-top" src="../assets/topfixed.jpeg" alt="" />
       <div class="first_sec">
         <img src="../assets/top2.jpeg" alt="" />
-        <img src="../assets/new-d2/ssss1.jpg" alt="" />
+        <img src="../assets/new-d3/1.jpg" alt="" />
       </div>
-      <img src="../assets/new-d2/222.jpeg" alt="" />
-      <img src="../assets/new-d2/33.jpg" alt="" />
+      <img src="../assets/new-d3/2.jpg" alt="" />
+      <img src="../assets/new-d3/3.jpg" alt="" />
       <img src="../assets/new-d/new4.jpeg" alt="" />
       <img src="../assets/new-d/new5.jpeg" alt="" />
       <img src="../assets/new-d/new6.jpeg" alt="" />

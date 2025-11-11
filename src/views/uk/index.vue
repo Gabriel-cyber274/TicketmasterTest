@@ -30,22 +30,11 @@ onUnmounted(() => {
     <div class="main_sec" v-if="!showSplash2">
       <img class="fixed-top" src="../../assets/ukfullindex.png" alt="" />
       <div class="first_sec">
-        <img src="../../assets/top.jpeg" alt="" />
-        <!-- <img src="../../assets/secondImg.jpeg" alt="" /> -->
-        <img src="../../assets/new-d2/111.jpeg" alt="" />
+        <img src="../../assets/new-d3/7.jpg" alt="" />
+        <img src="../../assets/new-d3/4.jpg" alt="" />
       </div>
-      <!-- <img src="../../assets/img1.jpeg" alt="" />
-      <img src="../../assets/img2.jpeg" alt="" />
-      <img src="../../assets/img3.jpeg" alt="" />
-      <img src="../../assets/img4.jpeg" alt="" />
-      <img src="../../assets/img5.jpeg" alt="" />
-      <img src="../../assets/img6.jpeg" alt="" />
-      <img src="../../assets/img7.jpeg" alt="" />
-      <img src="../../assets/img10.jpeg" alt="" />
-      <img src="../../assets/img8.jpeg" alt="" />
-      <img src="../../assets/img9.jpeg" alt="" /> -->
-      <img src="../../assets/new-d/new2.jpeg" alt="" />
-      <img src="../../assets/new-d/new3.jpeg" alt="" />
+      <img src="../../assets/new-d3/5.jpg" alt="" />
+      <img src="../../assets/new-d3/6.jpg" alt="" />
       <img src="../../assets/new-d/new4.jpeg" alt="" />
       <img src="../../assets/new-d/new5.jpeg" alt="" />
       <img src="../../assets/new-d/new6.jpeg" alt="" />
