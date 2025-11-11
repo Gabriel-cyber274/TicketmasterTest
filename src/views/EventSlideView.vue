@@ -307,7 +307,7 @@ onBeforeUnmount(() => {
                     <img
                       class="position-absolute"
                       style="right: 10px; width: 26px"
-                      src="../assets/info.jpeg"
+                      src="../assets/info.png"
                       alt=""
                     />
                   </div>
