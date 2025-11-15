@@ -225,6 +225,14 @@ function transferTickets(tickets) {
           <img class="cancel" src="../../assets/cancel.jpeg" alt="" />
         </RouterLink>
       </div>
+      <div class="top_new_design fade-ani">
+        <div class="first">
+          <h4>MY TICKETS</h4>
+        </div>
+        <div class="second">
+          <h4>ADD-ONS</h4>
+        </div>
+      </div>
 
       <div class="main-stuff fade-ani" v-if="showStuff">
         <div class="slide_container d-flex justify-content-center">
@@ -327,7 +335,7 @@ function transferTickets(tickets) {
                     <img
                       v-if="ticket.start_time == ''"
                       class="py-4"
-                      src="../../assets/viewT2.jpg"
+                      src="../../assets/viewT3.jpg"
                       alt=""
                     />
                     <div v-if="ticket.start_time != ''" class="timer mb-5">
@@ -944,5 +952,624 @@ function transferTickets(tickets) {
   .slide-event .third > div {
     margin-top: -22px;
   }
+}
+</style>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Prevent iOS viewport adjustments when keyboard appears */
+.transfer_form {
+  position: relative;
+}
+
+.transfer_form .form input,
+.transfer_form .form textarea {
+  width: 100%;
+  border: 1px solid #918b8be6;
+  outline: none;
+  font-size: 16px; /* Important: 16px prevents zoom on iOS */
+  color: #646060;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  /* Prevent iOS from adjusting the viewport */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.transfer_form .form input {
+  height: 41px;
+}
+
+.transfer_form .form textarea {
+  height: 70px;
+  max-height: 70px;
+  min-height: 70px;
+  max-width: 100%;
+  resize: none;
+}
+
+/* Fix for bottom modal positioning on iOS */
+.bottom-modal-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Prevent iOS keyboard from pushing modal up */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Alternative: Use viewport units that don't change with keyboard */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific styles */
+  .bottom-modal-container {
+    bottom: env(safe-area-inset-bottom, 0);
+    /* Use the initial viewport height */
+    max-height: calc(100vh - env(safe-area-inset-top, 0));
+  }
+}
+
+.overflow-icon {
+  position: absolute;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  border: none;
+  background: #e9e9ea;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 10%;
+
+  /* Center content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success-p {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.success-p h1 {
+  text-align: center;
+  font-size: 14px !important;
+  margin-top: 24px;
+  font-weight: 600 !important;
+  margin-bottom: 2px;
+}
+.success-p p {
+  margin-bottom: 0px !important;
+  text-align: center;
+}
+.sent-box {
+  background: #1ba91f;
+}
+.sent-box h2 {
+  font-size: 14px;
+  font-family: Poppins;
+  color: white;
+  margin-bottom: 0px !important;
+}
+.sGrey2 {
+  background: #4f5a64 !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.sGrey1 {
+  background: #576672 !important;
+}
+.timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 80%;
+  margin: auto;
+}
+.timer .box h1 {
+  font-size: 26px !important;
+  font-weight: 600 !important;
+  text-align: center;
+  margin-top: 5px !important;
+  font-family: Poppins;
+}
+.timer .box h4 {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: Poppins;
+  border: 1px solid #8080804f;
+  padding: 1px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-ani {
+  animation: topAnimation 0.4s ease-in 0s 1 forwards;
+  transform: translateY(-100%);
+}
+@keyframes topAnimation {
+  0% {
+    transform: translateY(1000%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fade-ani {
+  animation: fadeAnimation 0.7s ease-in 0.5s 1 forwards;
+  opacity: 0;
+}
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.transfer_form .transfer-n1 .lin {
+  width: 30px;
+  height: 3px;
+  background: black;
+}
+
+.transfer_form .transfer-n1 h1 {
+  font-size: 19px;
+  font-weight: 600;
+  font-family: Roboto;
+}
+.top_new_design {
+  background-color: #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 37px;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
+.top_new_design div {
+  width: 50%;
+  padding: 15px 0px;
+}
+.top_new_design .first {
+  border-bottom: 4.5px solid white;
+}
+.top_new_design h4 {
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 0px;
+  font-family: Poppins;
+}
+.transfer_form .first_header h4 {
+  font-size: 17px;
+  margin-bottom: 0px;
+  font-family: Poppins;
+}
+.transfer_form .first_header h5 {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #918b8be6;
+  font-family: Poppins;
+}
+.transfer_form .first_header h5 span {
+  color: black;
+}
+
+.transfer_form .form label {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #000000cf;
+  font-family: Poppins;
+  display: block;
+  font-weight: 600;
+}
+.transfer_form .form input {
+  width: 100%;
+  height: 41px;
+  border: 1px solid #918b8be6;
+  outline: none;
+  font-size: 14px;
+  color: #646060;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.transfer_form .form textarea {
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+  border: 1px solid #918b8be6;
+  color: #646060;
+  height: 70px;
+  padding: 10px;
+  max-height: 70px;
+  outline: none;
+  min-height: 70px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.map-img h3 {
+  position: absolute;
+  color: white;
+  top: 15%;
+  left: 8%;
+  font-size: 20px;
+  font-weight: 500;
+  padding-right: 12px;
+  font-family: Arial;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 1.6);
+}
+
+.map iframe {
+  width: 100%;
+  height: 400px;
+}
+.map-img {
+  width: 100%;
+}
+.bottom-modalstuff .fifth {
+  background: #9a9a9a14;
+  padding-bottom: 40px !important;
+}
+.bottom-modalstuff .fifth h3 {
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 0;
+}
+.bottom-modalstuff .fifth h2 {
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 0;
+  font-size: 20px;
+  color: #044deb;
+}
+.bottom-modalstuff .fourth {
+  border-bottom: 2px solid #9a9a9a66;
+}
+.bottom-modalstuff .fourth .seat {
+  width: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px grey;
+}
+.bottom-modalstuff .fourth .seat .firstS {
+  text-align: center;
+  background: #044deb;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+.bottom-modalstuff .fourth .seat .secondD {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bottom-modalstuff .fourth .seat .firstS h2 {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.bottom-modalstuff .third {
+  font-family: 'Poppins', sans-serif;
+}
+.ticketIcon {
+  transform: rotate(122deg);
+}
+.bottom-modalstuff .third h2 {
+  font-size: 15px;
+  font-family: Roboto;
+}
+.bottom-modalstuff .third h6 {
+  font-size: 15px;
+}
+.bottom-modalstuff .second .info {
+  background: white;
+  border: 1px solid #9a9a9a;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.bottom-modalstuff .first {
+  text-align: center;
+  border-bottom: 2px solid #9a9a9a66;
+  font-family: 'Poppins', sans-serif;
+}
+.bottom-modalstuff .first h2 {
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: Roboto;
+}
+.swiper-pagination {
+  position: relative; /* Change from absolute to relative */
+  bottom: 0; /* Adjust the position */
+  left: 0; /* Adjust the position */
+  transform: none; /* Remove transform */
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Add width */
+}
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background: #6c6c6c;
+}
+.swiper {
+  padding-bottom: 40px;
+}
+.swiper-pagination-bullet {
+  background: red;
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: background 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #044deb;
+}
+
+.swiper-pagination-bullet:hover {
+  background: #003f8f; /* Add hover effect */
+}
+
+.slide-event {
+  width: 100%;
+  box-shadow: 0px 1px 3px black;
+  border-radius: 10px;
+  height: 565px; /* Fixed height */
+  margin-left: 25px;
+  position: relative;
+}
+/* Adjust the internal sections to fill the space */
+.slide-event .first {
+  flex: 0 0 auto; /* Don't grow or shrink */
+}
+.buttons-ts {
+  width: 354px;
+  margin: 25px auto;
+  justify-content: space-between;
+}
+.buttons-ts button {
+  width: 48.5%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  border-radius: 5px;
+  background: #0078e3;
+  font-size: 14px;
+  border: none;
+}
+.buttons-ts .grey {
+  background: #e2e6e9 !important;
+}
+.slide-event .first {
+  width: 100%;
+  background: #044deb;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.slide-event .fourth {
+  background: #044deb;
+  width: 96%;
+  height: 2px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.slide-event .third {
+  background: white;
+  font-family: Arial;
+}
+.slide-event .third h1 {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 24px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.slide-event .third h3 {
+  text-align: center;
+  font-size: 15px;
+  font-family: Roboto;
+  color: #121212;
+}
+.slide-event .second img {
+  height: 200px;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+.slide-event .second div {
+  bottom: 0px;
+  color: white;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+.slide-event .second div h2 {
+  font-size: 17px;
+  margin-bottom: 0px;
+  font-family: 'Arial';
+  padding: 3px 7px;
+}
+.slide-event .second div p {
+  font-size: clamp(10px, 0.8rem, 13px);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 6px;
+}
+.slide-event .first .row-seat {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+.slide-event .first .row-seat h4 {
+  color: #f5f5f5e6;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.slide-event .first .row-seat h2 {
+  color: white;
+  font-size: 19.5px;
+  font-family: Roboto;
+  font-weight: 600;
+}
+.slide-event .first .header {
+  text-align: center;
+  padding: 10px 0px;
+  color: #f5f5f5e6;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+.cancel {
+  top: 17%;
+  left: 4%;
+  width: 6%;
+  position: absolute;
+}
+.main-stuff {
+  margin-top: 103px;
+}
+
+.custom-checkbox {
+  display: none;
+}
+
+/* Style label to look like a checkbox */
+.checkbox-label {
+  width: 24px;
+  height: 24px;
+  background-color: #e0e0e0; /* Unchecked color */
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Show check mark when checked */
+.custom-checkbox:checked + .checkbox-label {
+  background-color: #0078e3; /* Checked background color */
+}
+
+.custom-checkbox:checked + .checkbox-label::after {
+  content: '✔'; /* Check mark */
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bottom-modalstuff .fifth2 {
+  padding: 20px !important;
+}
+
+.bottom-modalstuff .fifth2 button {
+  background: black;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  font-family: Roboto;
+  padding: 7px 23px !important;
+}
+.slide-event .first .row-seat .rowtext {
+  font-size: 17.5px;
+}
+
+.slide-event .second {
+  flex: 0 0 auto;
+  position: relative;
+  height: 200px; /* Fixed height for image */
+}
+
+.slide-event .third {
+  flex: 1; /* Takes remaining space */
+  overflow: auto; /* Add scroll if content overflows */
+  background: white;
+  font-family: Arial;
+}
+
+.slide-event .fourth {
+  flex: 0 0 auto;
+}
+
+/* Adjust the image container */
+.slide-event .second img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+/* Ensure the timer section doesn't push content */
+.timer {
+  max-height: 100px;
+  overflow: hidden;
+}
+
+/* Make sure the ticket details section can scroll if needed */
+.slide-event .third > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-height: 812px) {
+  .slide-event {
+    height: 554px;
+  }
+  .buttons-ts {
+    margin-top: 10px;
+    margin-bottom: 11px;
+  }
+  .slide-event .third > div {
+    margin-top: -22px;
+  }
+}
+
+.useMob {
+  color: #0078e3;
+  font-size: 14px;
+  margin-top: 17px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

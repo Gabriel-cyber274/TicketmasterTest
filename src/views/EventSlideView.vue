@@ -585,6 +585,7 @@ onBeforeUnmount(() => {
                     autocomplete="email"
                   />
                 </div>
+                <h4 class="useMob">Use Mobile Number Instead</h4>
                 <div class="mb-2">
                   <label for="note" class="mb-1">Note</label>
                   <textarea
@@ -609,14 +610,19 @@ onBeforeUnmount(() => {
                 class="px-4 py-2"
                 @click="transferLoad"
                 style="
-                  width: 122.99px;
                   height: 38px;
                   display: flex;
                   justify-content: center;
                   align-items: center;
                 "
               >
-                <span v-if="!transferLoading">Transfer</span>
+                <span v-if="!transferLoading"
+                  >Transfer
+                  {{
+                    checkedTickets.filter(isChecked => isChecked).length
+                  }}
+                  Ticket</span
+                >
                 <div v-if="transferLoading" style="transform: scale(0.7)">
                   <div class="spinner-border text-light" role="status">
                     <span class="sr-only">Loading...</span>
@@ -922,7 +928,7 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 .bottom-modalstuff .fifth {
-  background: #9a9a9a66;
+  background: #9a9a9a14;
   padding-bottom: 40px !important;
 }
 .bottom-modalstuff .fifth h3 {
@@ -1200,13 +1206,14 @@ onBeforeUnmount(() => {
 }
 
 .bottom-modalstuff .fifth2 button {
-  background: #044deb;
+  background: black;
   color: white;
   font-size: 16px;
   text-align: center;
-  border-radius: 1px;
+  border-radius: 5px;
   border: none;
-  padding: 7px 32px !important;
+  font-family: Roboto;
+  padding: 7px 23px !important;
 }
 .slide-event .first .row-seat .rowtext {
   font-size: 17.5px;
@@ -1261,5 +1268,14 @@ onBeforeUnmount(() => {
   .slide-event .third > div {
     margin-top: -22px;
   }
+}
+
+.useMob {
+  color: #0078e3;
+  font-size: 14px;
+  margin-top: 17px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
