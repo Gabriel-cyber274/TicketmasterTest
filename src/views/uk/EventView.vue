@@ -9,6 +9,8 @@ const isUpcoming = ref(true)
 const loading = ref(false)
 const event = ref([])
 
+const selectedCountry = localStorage.getItem('selectedCountryUKS') || 'uk'
+
 const handleChange = value => {
   isUpcoming.value = value
 }
@@ -75,7 +77,31 @@ function formatEventDate(datePlace) {
 <template>
   <div class="main_container">
     <div class="main_sec">
-      <img class="fixed-top" src="../../assets/eventUkT.png" alt="" />
+      <img
+        v-if="selectedCountry == 'uk'"
+        class="fixed-top"
+        src="../../assets/eventUkT.png"
+        alt=""
+      />
+      <img
+        v-if="selectedCountry == 'belgium'"
+        class="fixed-top"
+        src="../../assets/belT2.jpg"
+        alt=""
+      />
+      <img
+        v-if="selectedCountry == 'ireland'"
+        class="fixed-top"
+        src="../../assets/IrelandT1.jpg"
+        alt=""
+      />
+      <img
+        v-if="selectedCountry == 'netherland'"
+        class="fixed-top"
+        src="../../assets/netherT2.jpg"
+        alt=""
+      />
+
       <div class="first_sec">
         <!-- <img src="../../assets/img12.jpeg" alt="" /> -->
         <div class="blue-nav d-flex justify-content-between">

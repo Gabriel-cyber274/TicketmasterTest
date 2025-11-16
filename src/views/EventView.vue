@@ -13,6 +13,8 @@ const handleChange = value => {
   isUpcoming.value = value
 }
 
+const selectedCountry = localStorage.getItem('selectedCountryUSS') || 'usa'
+
 onMounted(async () => {
   try {
     loading.value = true
@@ -75,7 +77,18 @@ function formatEventDate(datePlace) {
 <template>
   <div class="main_container">
     <div class="main_sec">
-      <img class="fixed-top" src="../assets/img11.jpeg" alt="" />
+      <img
+        v-if="selectedCountry == 'usa'"
+        class="fixed-top"
+        src="../assets/img11.jpeg"
+        alt=""
+      />
+      <img
+        v-if="selectedCountry == 'canada'"
+        class="fixed-top"
+        src="../assets/canadaT2.jpg"
+        alt=""
+      />
       <div class="first_sec">
         <!-- <img src="../assets/img12.jpeg" alt="" /> -->
         <div class="blue-nav d-flex justify-content-between">
